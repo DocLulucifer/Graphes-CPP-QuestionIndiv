@@ -1,5 +1,7 @@
 ﻿#include "CGrapheOperations.h"
 
+using namespace std;
+
 /******************************************************************************************************
 **** Entrées : pGRAParam : CGraphe*																   ****
 **** Nécessite :																		  	       ****
@@ -42,17 +44,81 @@ CGraphe * CGrapheOperations::COPNonOriente(const CGraphe* pGRAParam) const
 **** Sorties : bool																				   ****
 **** Entraîne : Determine si le coupage ppARCArcs est de taille maximale						   ****
 ******************************************************************************************************/
-bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppARCArcs)
+bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 {
 	if (pGRAGraphe->GRALireType() == true) {
 		throw CException(EXCTypeIncorrect);
 	}
+	if(COPEstUnCouplage(ppiArcs) == false) {
+		cout << "Ce n'est pas un couplage" << endl;
+		return false;
+	}
+	else {
+		
+	}
 	return false;
 }
 
-bool CGrapheOperations::COPEstUnCouplage(int** ppARCArcs)
+
+bool CGrapheOperations::COPEstUnCouplage(int** ppiArcs)
 {
-	return false;
+	unsigned int uiboucle, uiboucle2;
+	int iTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
+
+	//Si il n'y a qu'un seul arc, il est forcément un couplage
+	if (iTaille == 1) {
+		return true;
+	}
+
+	//Initialisation, on part du principe que ppiArcs[0][0] != ppiArcs[0][1]
+	int iValeur1 = ppiArcs[0][0], iValeur2 = ppiArcs[0][1];
+	for (uiboucle = 0 ; uiboucle < iTaille; uiboucle++) {
+		for (uiboucle2 = uiboucle + 1; uiboucle2 < iTaille; uiboucle2++) {
+			if (iValeur1 == ppiArcs[uiboucle2][0] || iValeur1 == ppiArcs[uiboucle2][1]) {
+				return false;
+			}
+		}
+		iValeur1 = ppiArcs[uiboucle][0];
+		for (uiboucle2 = uiboucle + 1; uiboucle2 < iTaille; uiboucle2++) {
+			if (iValeur2 == ppiArcs[uiboucle2][0] || iValeur2 == ppiArcs[uiboucle2][1]) {
+				return false;
+			}
+		}
+		iValeur2 = ppiArcs[uiboucle][1];
+	}
+	return true;
+}
+
+void CGrapheOperations::COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs)
+{
+	// Initialisation des variables
+	int iTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
+	unsigned int uiboucle;
+
+	// Création du tableau temporaire
+	int** ppiArcsTMP = new int* [iTaille + 1];
+	for (uiboucle = 0; uiboucle < iTaille + 1; uiboucle++) {
+		ppiArcsTMP[uiboucle] = new int[2];
+	}
+
+	// Copie des arcs
+	for (uiboucle = 0; uiboucle < iTaille; uiboucle++) {
+		ppiArcsTMP[uiboucle][0] = ppiArcs[uiboucle][0];
+		ppiArcsTMP[uiboucle][1] = ppiArcs[uiboucle][1];
+	}
+	
+	// Ajout de l'arc
+	ppiArcsTMP[iTaille][0] = piArcs[0];
+	ppiArcsTMP[iTaille][1] = piArcs[1];
+
+	// Suppression de l'ancien tableau
+	for (uiboucle = 0; uiboucle < iTaille; uiboucle++) {
+		delete[] ppiArcs[uiboucle];
+	}
+	delete[] ppiArcs;
+
+	// Affectation du nouveau tableau
+	ppiArcs = ppiArcsTMP;
 }
 
 

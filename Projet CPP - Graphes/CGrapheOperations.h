@@ -28,11 +28,25 @@ public:
 	**** Entrées : pGRAGraphe : CGraphe*, ppARCArcs : CArc**										   ****
 	**** Nécessite :																		  	       ****
 	**** Sorties : bool																				   ****
-	**** Entraîne : Determine si le coupage ppARCArcs est de taille maximale						   ****
+	**** Entraîne : Determine si le couplage ppARCArcs est de taille maximale						   ****
 	******************************************************************************************************/
-	bool COPTestCouplage(CGraphe* pGRAGraphe, int** ppARCArcs);
+	bool COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
 	
-	bool COPEstUnCouplage(int** ppARCArcs);
+	/******************************************************************************************************
+	* Entrées : ppiArcs : int**																		   ****
+	* Nécessite :																			  	       ****
+	* Sorties : bool																				   ****
+	* Entraîne : Deteremine si ppiArcs est un couplage												   ****
+	******************************************************************************************************/
+	bool COPEstUnCouplage(int** ppiArcs);
+
+	/******************************************************************************************************
+	* Entrées : ppiArcs : int**, piArcs : int*														   ****
+	* Nécessite :																			  	       ****
+	* Sorties : bool																				   ****
+	* Entraîne : Ajouter un arc au couplage ppiArcs													   ****
+	******************************************************************************************************/
+	void COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs);
 };
 
 #endif
