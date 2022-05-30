@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 		//Récupération du graphe inversé puis affichage
 		try {
 			cout << endl << "-----Graphe Inverse-----" << endl << endl;
-			pGRAGrapheInverse = COPBoiteAOutils.GRAInversion(pGRAGraphe);
+			pGRAGrapheInverse = COPBoiteAOutils.COPInversion(pGRAGraphe);
 			pGRAGrapheInverse->GRAAffichage();
 		}
 		catch (CException EXCException) {
