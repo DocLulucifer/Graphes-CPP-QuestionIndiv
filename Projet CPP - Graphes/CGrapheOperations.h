@@ -47,6 +47,8 @@ public:
 	* Entraîne : Ajouter un arc au couplage ppiArcs													   ****
 	******************************************************************************************************/
 	void COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs);
+	
+	int** COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
 };
 
 #endif

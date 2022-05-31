@@ -54,11 +54,27 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 		return false;
 	}
 	else {
+		cout << "C'est un couplage" << endl;
 		
 	}
 	return false;
 }
 
+/*
+1:	function TestCouplage(G,C)
+2:	Si (il existe a1, a2 appartenant à C tel que a1 et a2 ont un sommet en commun) Alors
+3:		Afficher « C n’est pas un couplage»
+4:	Sinon
+5:		Afficher « C est un couplage »
+6:		Pour tout a appartenant à A\C Faire
+5:			C’← C + {a}
+6:			Si (C’ est un couplage) Alors
+7:				Afficher « C n’est pas de taille maximale»
+8:				Fin
+9:			FinSi
+10:		Fin Pour
+11:	Fin Si
+*/
 
 bool CGrapheOperations::COPEstUnCouplage(int** ppiArcs)
 {
@@ -121,21 +137,17 @@ void CGrapheOperations::COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs)
 	ppiArcs = ppiArcsTMP;
 }
 
+int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
+{
+	// Déterminer l'ensemble des arcs de pGRAGraphe privé de ppiArcs
+	int** ppiArcsTMP = new int* [pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2];
+	
+	
+
+	return nullptr;
+}
 
 
 
-/*
-1:	function TestCouplage(G,C)
-2:	Si (il existe a1, a2 appartenant à C tel que a1 et a2 ont un sommet en commun) Alors
-3:		Afficher « C n’est pas un couplage»
-4:	Sinon
-5:		Afficher « C est un couplage »
-6:		Pour tout a appartenant à A\C Faire
-5:			C’← C + {a}
-6:			Si (C’ est un couplage) Alors
-7:				Afficher « C n’est pas de taille maximale»
-8:				Fin
-9:			FinSi
-10:		Fin Pour
-11:	Fin Si
-*/
+
+
