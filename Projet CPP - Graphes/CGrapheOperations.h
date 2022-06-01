@@ -49,6 +49,8 @@ public:
 	void COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs);
 	
 	int** COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
+
+	bool COPEstDansEnsembleArcs(int** ppiEnsembleArcs, int* piArcATester);
 };
 
 #endif

@@ -139,12 +139,65 @@ void CGrapheOperations::COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs)
 
 int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 {
-	// Déterminer l'ensemble des arcs de pGRAGraphe privé de ppiArcs
 	int** ppiArcsTMP = new int* [pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2];
+	int** ppiArcsGraphe = new int* [pGRAGraphe->GRALireNbArcs()];
+	unsigned int uiboucle, uiboucle2, uicompteur = 0;
 	
+	// Initialisation du tableau des arcs de pGRAGraphe
+	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs(); uiboucle++) {
+		ppiArcsGraphe[uiboucle] = new int[2];
+	}
 	
+	// Initialisation du tableau des arcs de pGRAGraphe privé de ppiArcs
+	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2; uiboucle++) {
+		ppiArcsTMP[uiboucle] = new int[2];
+	}
+	
+	// Copie des arcs de pGRAGraphe en un tableau de int**
+	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbSommet(); uiboucle++) {
+		for (uiboucle2 = 0; uiboucle2 < pGRAGraphe->GRALireSommets()[uiboucle]->SOMLireNbArcsSortants(); uiboucle2++) {
+			ppiArcsGraphe[uicompteur][0] = pGRAGraphe->GRALireSommets()[uiboucle]->SOMLireNumero();
+			ppiArcsGraphe[uicompteur][1] = pGRAGraphe->GRALireSommets()[uiboucle]->SOMLireArcsSortants()[uiboucle2]->ARCLireDestination();
+			uicompteur++;
+		}
+	}
+	
+	// Selection des arcs de ppiArcsGraphe qui ne sont pas dans ppiArcs
+	uicompteur = 0;
+	for (uiboucle = 0 ; uiboucle < pGRAGraphe->GRALireNbArcs(); uiboucle++) {
+		if (COPEstDansEnsembleArcs(ppiArcs, ppiArcsGraphe[uiboucle]) == false) {
+			ppiArcsTMP[uicompteur][0] = ppiArcsGraphe[uiboucle][0];
+			ppiArcsTMP[uicompteur][1] = ppiArcsGraphe[uiboucle][1];
+			uicompteur++;
+		}
+	}
+	
+	// Libération de la mémoire
+	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs(); uiboucle++) {
+		delete[] ppiArcsGraphe[uiboucle];
+	}
+	delete[] ppiArcsGraphe;
+	
+	// Retour du complémentaire
+	return ppiArcsTMP;
+}
 
-	return nullptr;
+bool CGrapheOperations::COPEstDansEnsembleArcs(int** ppiEnsembleArcs, int* piArcATester)
+{
+	// Initialisation des variables
+	int iTaille = (sizeof(ppiEnsembleArcs) / sizeof(ppiEnsembleArcs[0][0])) / 2;
+	unsigned int uiboucle;
+	
+	// Parcours du tableau
+	for (uiboucle = 0; uiboucle < iTaille; uiboucle++) {
+		if (ppiEnsembleArcs[uiboucle][0] == piArcATester[0] && ppiEnsembleArcs[uiboucle][1] == piArcATester[1]) {
+			return true;
+		}
+		else if (ppiEnsembleArcs[uiboucle][0] == piArcATester[1] && ppiEnsembleArcs[uiboucle][1] == piArcATester[0]) {
+			return true;
+		}
+	}
+	return false;
 }
 
 
