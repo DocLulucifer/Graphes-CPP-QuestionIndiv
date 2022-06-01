@@ -1,5 +1,7 @@
-#pragma once
 #ifndef COPGRAPHES
+
+#pragma warning(disable : 6384)
+
 #define COPGRAPHES
 #define EXCTypeIncorrect 60
 
@@ -46,7 +48,7 @@ public:
 	* Sorties : bool																				   ****
 	* Entraîne : Ajouter un arc au couplage ppiArcs													   ****
 	******************************************************************************************************/
-	void COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs);
+	int ** COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs);
 	
 	int** COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
 

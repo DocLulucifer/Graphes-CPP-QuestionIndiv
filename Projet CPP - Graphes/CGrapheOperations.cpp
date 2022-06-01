@@ -54,10 +54,44 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 		return false;
 	}
 	else {
+		unsigned int uiboucle, uiTailleComplementaire = pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
 		cout << "C'est un couplage" << endl;
+		int** ppiEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, ppiArcs);
 		
+		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
+			int* piArcAAjouter = ppiEnsembleComplementaire[uiboucle];
+			int** ppiEnsembleTest = COPAjouterArcAuCouplage(ppiArcs, piArcAAjouter);
+			if(COPEstUnCouplage(ppiEnsembleTest) == true) {
+				cout << "Le couplage n'est pas de taille maximale !" << endl;
+				
+				// Libération de la mémoire avant retour
+				for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
+					delete[] ppiEnsembleComplementaire[uiboucle];
+				}
+				delete[] ppiEnsembleComplementaire;
+
+				for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
+					delete[] ppiEnsembleTest[uiboucle];
+				}
+				delete[] ppiEnsembleTest;
+				
+				return false;
+			}
+			
+			// Libération de la mémoire avant nouveau test			
+			for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
+				delete[] ppiEnsembleTest[uiboucle];
+			}
+			delete[] ppiEnsembleTest;
+		}
+		
+		// Libération de la mémoire avant retour
+		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
+			delete[] ppiEnsembleComplementaire[uiboucle];
+		}
+		delete[] ppiEnsembleComplementaire;
 	}
-	return false;
+	return true;
 }
 
 /*
@@ -79,23 +113,23 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 bool CGrapheOperations::COPEstUnCouplage(int** ppiArcs)
 {
 	unsigned int uiboucle, uiboucle2;
-	int iTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
+	unsigned int uiTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
 
 	//Si il n'y a qu'un seul arc, il est forcément un couplage
-	if (iTaille == 1) {
+	if (uiTaille == 1) {
 		return true;
 	}
 
 	//Initialisation, on part du principe que ppiArcs[0][0] != ppiArcs[0][1]
 	int iValeur1 = ppiArcs[0][0], iValeur2 = ppiArcs[0][1];
-	for (uiboucle = 0 ; uiboucle < iTaille; uiboucle++) {
-		for (uiboucle2 = uiboucle + 1; uiboucle2 < iTaille; uiboucle2++) {
+	for (uiboucle = 0 ; uiboucle < uiTaille; uiboucle++) {
+		for (uiboucle2 = uiboucle + 1; uiboucle2 < uiTaille; uiboucle2++) {
 			if (iValeur1 == ppiArcs[uiboucle2][0] || iValeur1 == ppiArcs[uiboucle2][1]) {
 				return false;
 			}
 		}
 		iValeur1 = ppiArcs[uiboucle][0];
-		for (uiboucle2 = uiboucle + 1; uiboucle2 < iTaille; uiboucle2++) {
+		for (uiboucle2 = uiboucle + 1; uiboucle2 < uiTaille; uiboucle2++) {
 			if (iValeur2 == ppiArcs[uiboucle2][0] || iValeur2 == ppiArcs[uiboucle2][1]) {
 				return false;
 			}
@@ -105,36 +139,29 @@ bool CGrapheOperations::COPEstUnCouplage(int** ppiArcs)
 	return true;
 }
 
-void CGrapheOperations::COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs)
+int ** CGrapheOperations::COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs)
 {
 	// Initialisation des variables
-	int iTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
+	unsigned int uiTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
 	unsigned int uiboucle;
 
 	// Création du tableau temporaire
-	int** ppiArcsTMP = new int* [iTaille + 1];
-	for (uiboucle = 0; uiboucle < iTaille + 1; uiboucle++) {
-		ppiArcsTMP[uiboucle] = new int[2];
+	int** ppiNouvelEnsemble = new int* [uiTaille + 1];
+	for (uiboucle = 0; uiboucle < uiTaille + 1; uiboucle++) {
+		ppiNouvelEnsemble[uiboucle] = new int[2];
 	}
 
 	// Copie des arcs
-	for (uiboucle = 0; uiboucle < iTaille; uiboucle++) {
-		ppiArcsTMP[uiboucle][0] = ppiArcs[uiboucle][0];
-		ppiArcsTMP[uiboucle][1] = ppiArcs[uiboucle][1];
+	for (uiboucle = 0; uiboucle < uiTaille; uiboucle++) {
+		ppiNouvelEnsemble[uiboucle][0] = ppiArcs[uiboucle][0];
+		ppiNouvelEnsemble[uiboucle][1] = ppiArcs[uiboucle][1];
 	}
 	
 	// Ajout de l'arc
-	ppiArcsTMP[iTaille][0] = piArcs[0];
-	ppiArcsTMP[iTaille][1] = piArcs[1];
-
-	// Suppression de l'ancien tableau
-	for (uiboucle = 0; uiboucle < iTaille; uiboucle++) {
-		delete[] ppiArcs[uiboucle];
-	}
-	delete[] ppiArcs;
-
-	// Affectation du nouveau tableau
-	ppiArcs = ppiArcsTMP;
+	ppiNouvelEnsemble[uiTaille][0] = piArcs[0];
+	ppiNouvelEnsemble[uiTaille][1] = piArcs[1];
+	
+	return ppiNouvelEnsemble;
 }
 
 int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
@@ -185,11 +212,11 @@ int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** pp
 bool CGrapheOperations::COPEstDansEnsembleArcs(int** ppiEnsembleArcs, int* piArcATester)
 {
 	// Initialisation des variables
-	int iTaille = (sizeof(ppiEnsembleArcs) / sizeof(ppiEnsembleArcs[0][0])) / 2;
+	unsigned int uiTaille = (sizeof(ppiEnsembleArcs) / sizeof(ppiEnsembleArcs[0][0])) / 2;
 	unsigned int uiboucle;
 	
 	// Parcours du tableau
-	for (uiboucle = 0; uiboucle < iTaille; uiboucle++) {
+	for (uiboucle = 0; uiboucle < uiTaille; uiboucle++) {
 		if (ppiEnsembleArcs[uiboucle][0] == piArcATester[0] && ppiEnsembleArcs[uiboucle][1] == piArcATester[1]) {
 			return true;
 		}
