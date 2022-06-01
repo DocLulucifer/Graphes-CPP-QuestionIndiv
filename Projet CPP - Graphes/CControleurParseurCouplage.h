@@ -1,17 +1,17 @@
-#ifndef CONTROL_PARSER
-#define CONTROL_PARSER
+#ifndef CONTROL_PARSER_COUPLAGE
+#define CONTROL_PARSER_COUPLAGE
 
-#include "CGraphe.h"
 #include "CFichier.h"
 
 #define EXCArretProgramme 50
 
 #define EXCCheminVideCtrlParseur 30
 
-class CControleurParseur {
+class CControleurParseurCouplage {
 private:
 	char* pcCONChemin;
-	CGraphe* pGRACONGraphe;
+	int** ppiCouplage;
+	unsigned int uiCONNombreCouplage;
 public:
 
 	/******************************************************************************************************
@@ -20,7 +20,7 @@ public:
 	**** Sorties :	CControleurParseur																   ****
 	**** Entraîne : La construction d'un objet CControleurParseur par défaut						   ****
 	******************************************************************************************************/
-	CControleurParseur();
+	CControleurParseurCouplage();
 
 	/***********************************************************************************************************************
 	**** Entrées : pcChemin : char*																						****
@@ -28,7 +28,7 @@ public:
 	**** Sorties :	CControleurParseur																					****
 	**** Entraîne : La construction d'un objet CControleurParseur possédant un chemin d'accès à un fichier de lecture	****
 	***********************************************************************************************************************/
-	CControleurParseur(char* pcChemin);
+	CControleurParseurCouplage(char* pcChemin);
 
 	/******************************************************************************************************
 	**** Entrées :																					   ****
@@ -36,7 +36,7 @@ public:
 	**** Sorties :																					   ****
 	**** Entraîne : La destruction de l'objet CControleurParseur									   ****
 	******************************************************************************************************/
-	~CControleurParseur();
+	~CControleurParseurCouplage();
 
 	/******************************************************************************************************
 	**** Entrées :																					   ****
@@ -53,6 +53,8 @@ public:
 	**** Entraîne : Modifie le chemin d'accès au fichier de lecture									   ****
 	******************************************************************************************************/
 	void CONModifierChemin(char* pcChemin);
+	
+	unsigned int CONLireNombreCouplage();
 
 	/******************************************************************************************************
 	**** Entrées :																					   ****
@@ -60,7 +62,7 @@ public:
 	**** Sorties :	pcConChemin : char*																   ****
 	**** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
 	******************************************************************************************************/
-	CGraphe* CONLireGraphe();
+	int** CONLireCouplage();
 
 	/******************************************************************************************************
 	**** Entrées :																					   ****
@@ -68,7 +70,7 @@ public:
 	**** Sorties :																					   ****
 	**** Entraîne : Lis le fichier de lecture														   ****
 	******************************************************************************************************/
-	void CONLireFichierGraphe();
+	void CONLireFichierCouplage();
 };
 
 #endif // !CONTROL_PARSER

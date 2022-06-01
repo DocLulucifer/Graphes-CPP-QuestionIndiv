@@ -157,7 +157,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CArc.cpp" />
-    <ClCompile Include="CControleurParseur.cpp" />
+    <ClCompile Include="CControleurParseurCouplage.cpp" />
+    <ClCompile Include="CControleurParseurGraphe.cpp" />
     <ClCompile Include="CException.cpp" />
     <ClCompile Include="CFichier.cpp" />
     <ClCompile Include="CGraphe.cpp" />
@@ -167,7 +168,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CArc.h" />
-    <ClInclude Include="CControleurParseur.h" />
+    <ClInclude Include="CControleurParseurCouplage.h" />
+    <ClInclude Include="CControleurParseurGraphe.h" />
     <ClInclude Include="CException.h" />
     <ClInclude Include="CFichier.h" />
     <ClInclude Include="CGraphe.h" />

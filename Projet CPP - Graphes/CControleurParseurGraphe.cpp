@@ -1,4 +1,4 @@
-#include "CControleurParseur.h"
+#include "CControleurParseurGraphe.h"
 
 
 /******************************************************************************************************
@@ -7,7 +7,7 @@
 **** Sorties :	CControleurParseur																   ****
 **** Entraîne : La construction d'un objet CControleurParseur par défaut						   ****
 ******************************************************************************************************/
-CControleurParseur::CControleurParseur()
+CControleurParseurGraphe::CControleurParseurGraphe()
 {
 	pcCONChemin = nullptr;
 	pGRACONGraphe = new CGraphe();
@@ -19,7 +19,7 @@ CControleurParseur::CControleurParseur()
 **** Sorties :	CControleurParseur																					****
 **** Entraîne : La construction d'un objet CControleurParseur possédant un chemin d'accès à un fichier de lecture	****
 ***********************************************************************************************************************/
-CControleurParseur::CControleurParseur(char* pcChemin)
+CControleurParseurGraphe::CControleurParseurGraphe(char* pcChemin)
 {
 	pcCONChemin = pcChemin;
 	pGRACONGraphe = new CGraphe();
@@ -31,7 +31,7 @@ CControleurParseur::CControleurParseur(char* pcChemin)
 **** Sorties :																					   ****
 **** Entraîne : La destruction de l'objet CControleurParseur									   ****
 ******************************************************************************************************/
-CControleurParseur::~CControleurParseur()
+CControleurParseurGraphe::~CControleurParseurGraphe()
 {
 	pcCONChemin = nullptr;
 	delete pGRACONGraphe;
@@ -44,7 +44,7 @@ CControleurParseur::~CControleurParseur()
 **** Sorties :	pcConChemin : char*																   ****
 **** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
 ******************************************************************************************************/
-char* CControleurParseur::CONLireChemin()
+char* CControleurParseurGraphe::CONLireChemin()
 {
 	return pcCONChemin;
 }
@@ -55,7 +55,7 @@ char* CControleurParseur::CONLireChemin()
 **** Sorties :																					   ****
 **** Entraîne : Modifie le chemin d'accès au fichier de lecture									   ****
 ******************************************************************************************************/
-void CControleurParseur::CONModifierChemin(char* pcChemin)
+void CControleurParseurGraphe::CONModifierChemin(char* pcChemin)
 {
 	pcCONChemin = pcChemin;
 }
@@ -66,7 +66,7 @@ void CControleurParseur::CONModifierChemin(char* pcChemin)
 **** Sorties :	pcConChemin : char*																   ****
 **** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
 ******************************************************************************************************/
-CGraphe* CControleurParseur::CONLireGraphe()
+CGraphe* CControleurParseurGraphe::CONLireGraphe()
 {
 	return pGRACONGraphe;
 }
@@ -77,7 +77,7 @@ CGraphe* CControleurParseur::CONLireGraphe()
 **** Sorties :																					   ****
 **** Entraîne : Lis le fichier de lecture														   ****
 ******************************************************************************************************/
-void CControleurParseur::CONLireFichierGraphe()
+void CControleurParseurGraphe::CONLireFichierGraphe()
 {
 	if (pcCONChemin == nullptr) {
 		throw CException(EXCCheminVideCtrlParseur);
@@ -199,7 +199,7 @@ void CControleurParseur::CONLireFichierGraphe()
 	
 	//Récupération des arcs
 	try {
-		ppiArcs = FICParseur.FICLireTabAvecVirgule(uiNbSommets, (char*)"arcs", (char*)"debut", (char*)"fin");
+		ppiArcs = FICParseur.FICLireTabAvecVirgule(uiNbArcs, (char*)"arcs", (char*)"debut", (char*)"fin");
 	}
 	catch (CException EXCException)
 	{

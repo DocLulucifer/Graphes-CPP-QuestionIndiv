@@ -1,6 +1,7 @@
 #include "CGraphe.h"
 #include "CException.h"
-#include "CControleurParseur.h"
+#include "CControleurParseurGraphe.h"
+#include "CControleurParseurCouplage.h"
 #include "CGrapheOperations.h"
 #include <cstdio>
 #include <cstdlib>
@@ -17,16 +18,18 @@ using namespace std;
 ******************************************************************************************************/
 int main(int argc, char* argv[]) {
 
-	if (argc == 2) {
+	if (argc == 3) {
 
 		//Déclaration des variables du main
-		CControleurParseur* pCONFichierLu = nullptr;
+		CControleurParseurGraphe* pCONFichierLu = nullptr;
+		CControleurParseurCouplage* pCONFichierCouplageLu = nullptr;
+		int** ppiCouplage = nullptr;
 		CGraphe* pGRAGraphe = nullptr, * pGRAGrapheInverse = nullptr;
 		CGrapheOperations COPBoiteAOutils;
 
-		//Lecture du fichier passé en paramètre
+		//Lecture du graphe passé en paramètre
 		try {
-			pCONFichierLu = new CControleurParseur(argv[1]);
+			pCONFichierLu = new CControleurParseurGraphe(argv[1]);
 			pCONFichierLu->CONLireFichierGraphe();
 		}
 		catch (CException EXCException) {
@@ -38,7 +41,22 @@ int main(int argc, char* argv[]) {
 				return 1;
 			}
 		}
-
+		
+		//Lecture du couplage passé en paramètre
+		try {
+			pCONFichierCouplageLu = new CControleurParseurCouplage(argv[2]);
+			pCONFichierCouplageLu->CONLireFichierCouplage();
+		}
+		catch (CException EXCException) {
+			if (EXCException.EXCLireErreur() == EXCArretProgramme) {
+				return 1;
+			}
+			else if (EXCException.EXCLireErreur() == EXCCheminVideCtrlParseur) {
+				cout << "Erreur : Chemin de fichier passé en paramètre vide ou nul !" << endl;
+				return 1;
+			}
+		}
+		/*
 		//Récupération du graphe lu et affichage
 		try {
 			cout << "-----Graphe lu depuis le fichier :-----" << endl << endl;
@@ -53,38 +71,32 @@ int main(int argc, char* argv[]) {
 			}
 			return 1;
 		}
-
-		//Récupération du graphe inversé puis affichage
+		*/
+		
+		// Exécution du test de couplage
 		try {
-			cout << endl << "-----Graphe Inverse-----" << endl << endl;
-			pGRAGrapheInverse = COPBoiteAOutils.COPInversion(pGRAGraphe);
-			pGRAGrapheInverse->GRAAffichage();
+			ppiCouplage = pCONFichierCouplageLu->CONLireCouplage();
+			COPBoiteAOutils.COPTestCouplage(pGRAGraphe, ppiCouplage);
 		}
 		catch (CException EXCException) {
 			if (EXCException.EXCLireErreur() == EXCArretProgramme) {
 				return 1;
 			}
-			else if (EXCException.EXCLireErreur() == EXCListeSommetInexistante) {
-				cout << "Erreur : Liste des sommets du graphes vide, Affichage impossible : Rien à afficher !" << endl;
-				return 1;
-			}
-			else {
-				cout << "Erreur non-specifiee !" << endl;
-			}
 		}
-		
 		//Libération de la mémoire allouée dans le main
 		delete pGRAGraphe;
 		delete pGRAGrapheInverse;
 		delete pCONFichierLu;
 
 	}
-	else if (argc > 2) {
-		cout << "Erreur : Ne passez qu'un fichier en argument !" << endl;
+	else if (argc > 3) {
+		cout << "Erreur : Nombre d'arguments trop grand !" << endl;
+		cout << "Veuillez specifier un fichier contenant un graphe et un autre contenant un couplage !" << endl;
 		return 1;
 	}
 	else {
-		cout << "Erreur : Aucun chemin de fichier passe en argument !" << endl;
+		cout << "Erreur : Nombre d'arguments insuffisants !" << endl;
+		cout << "Veuillez specifier un fichier contenant un graphe et un autre contenant un couplage !" << endl;
 		return 1;
 	}
 
