@@ -87,6 +87,7 @@ int main(int argc, char* argv[]) {
 		delete pGRAGraphe;
 		delete pGRAGrapheInverse;
 		delete pCONFichierLu;
+		delete pCONFichierCouplageLu;
 
 	}
 	else if (argc > 3) {
