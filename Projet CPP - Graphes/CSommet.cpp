@@ -6,10 +6,10 @@
 using namespace std;
 
 /******************************************************************************************************
-**** Entrées :	SOMParam : CSommet&																   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :	SOMParam : CSommet&																   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties : CSommet																			   ****
-**** Entraîne : Crée un nouvel objet CSommet par copie de SOMParam								   ****
+**** Entraï¿½ne : Crï¿½e un nouvel objet CSommet par copie de SOMParam								   ****
 ******************************************************************************************************/
 CSommet::CSommet(const CSommet& SOMParam)
 {
@@ -34,10 +34,10 @@ CSommet::CSommet(const CSommet& SOMParam)
 
 
 /******************************************************************************************************
-**** Entrées : iNumero : int																	   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : iNumero : int																	   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties : CSommet																			   ****
-**** Entraîne : Crée un nouvel objet CSommet possédant le numéro iNumero						   ****
+**** Entraï¿½ne : Crï¿½e un nouvel objet CSommet possï¿½dant le numï¿½ro iNumero						   ****
 ******************************************************************************************************/
 CSommet::CSommet(int iNumero)
 {
@@ -51,16 +51,16 @@ CSommet::CSommet(int iNumero)
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties : 																					   ****
-**** Entraîne : Destruction de l'objet CSommet par défaut										   ****
+**** Entraï¿½ne : Destruction de l'objet CSommet par dï¿½faut										   ****
 ******************************************************************************************************/
 CSommet::~CSommet()
 {
     unsigned int uiboucle;
 	
-	//Libération de la memoire des arcs entrants
+	//Libï¿½ration de la memoire des arcs entrants
     if (ppARCSOMEntrant != nullptr) {
         for (uiboucle = 0; uiboucle < SOMLireNbArcsEntrants(); uiboucle++) {
             delete ppARCSOMEntrant[uiboucle];
@@ -70,7 +70,7 @@ CSommet::~CSommet()
         ppARCSOMEntrant = nullptr;
     }
 
-	//Libération de la memoire des arcs sortants
+	//Libï¿½ration de la memoire des arcs sortants
     if (ppARCSOMSortant != nullptr) {
         for (uiboucle = 0; uiboucle < SOMLireNbArcsSortants(); uiboucle++) {
             delete ppARCSOMSortant[uiboucle];
@@ -82,10 +82,10 @@ CSommet::~CSommet()
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties : iSOMNumero : int																	   ****
-**** Entraîne : Renvoie le numéro du sommet														   ****
+**** Entraï¿½ne : Renvoie le numï¿½ro du sommet														   ****
 ******************************************************************************************************/
 int CSommet::SOMLireNumero() const
 {
@@ -94,10 +94,10 @@ int CSommet::SOMLireNumero() const
 
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties : uiSOMNbArcsSommetEntrants : unsigned int											   ****
-**** Entraîne : Renvoie le nombre d'arcs entrants du sommet										   ****
+**** Entraï¿½ne : Renvoie le nombre d'arcs entrants du sommet										   ****
 ******************************************************************************************************/
 unsigned int CSommet::SOMLireNbArcsEntrants() const
 {
@@ -105,10 +105,10 @@ unsigned int CSommet::SOMLireNbArcsEntrants() const
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties : uiSOMNbArcsSommetSortants : unsigned int											   ****
-**** Entraîne : Renvoie le nombre d'arcs sortants du sommet										   ****
+**** Entraï¿½ne : Renvoie le nombre d'arcs sortants du sommet										   ****
 ******************************************************************************************************/
 unsigned int CSommet::SOMLireNbArcsSortants() const
 {
@@ -116,10 +116,10 @@ unsigned int CSommet::SOMLireNbArcsSortants() const
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties : ppARCSOMSortants : CArc**														   ****
-**** Entraîne : Renvoie la liste des arcs sortants												   ****
+**** Entraï¿½ne : Renvoie la liste des arcs sortants												   ****
 ******************************************************************************************************/
 const CArc* const* CSommet::SOMLireArcsSortants() const
 {
@@ -127,10 +127,10 @@ const CArc* const* CSommet::SOMLireArcsSortants() const
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties : ppARCSOMEntrants : CArc**														   ****
-**** Entraîne : Renvoie la liste des arcs entrants												   ****
+**** Entraï¿½ne : Renvoie la liste des arcs entrants												   ****
 ******************************************************************************************************/
 const CArc* const* CSommet::SOMLireArcsEntrants() const
 {
@@ -138,10 +138,10 @@ const CArc* const* CSommet::SOMLireArcsEntrants() const
 }
 
 /******************************************************************************************************
-**** Entrées : iNumero : int																	   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : iNumero : int																	   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Modifie le numéro du sommet														   ****
+**** Entraï¿½ne : Modifie le numï¿½ro du sommet														   ****
 ******************************************************************************************************/
 void CSommet::SOMModifierNumero(int iNumero)
 {
@@ -149,10 +149,10 @@ void CSommet::SOMModifierNumero(int iNumero)
 }
 
 /******************************************************************************************************
-**** Entrées : pARCArc : CArc*																	   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : pARCArc : CArc*																	   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Ajoute CArc dans la liste des arcs entrants du sommet							   ****
+**** Entraï¿½ne : Ajoute CArc dans la liste des arcs entrants du sommet							   ****
 ******************************************************************************************************/
 void CSommet::SOMAjouterArcEntrant(CArc* pARCArc)
 {
@@ -167,7 +167,7 @@ void CSommet::SOMAjouterArcEntrant(CArc* pARCArc)
         ppARCSOMEntranttmp[uiboucle1] = new CArc;
     }
 
-	//Copie des arcs entrants dans le nouveau tableau et ajout de l'arc à ajouter à la fin de ce tableau
+	//Copie des arcs entrants dans le nouveau tableau et ajout de l'arc ï¿½ ajouter ï¿½ la fin de ce tableau
     for (uiboucle1 = 0; uiboucle1 < uiSOMNbArcsSommetEntrants + 1; uiboucle1++) {
         if (uiboucle1 < uiSOMNbArcsSommetEntrants) {
             *ppARCSOMEntranttmp[uiboucle1] = *ppARCSOMEntrant[uiboucle1];
@@ -177,7 +177,7 @@ void CSommet::SOMAjouterArcEntrant(CArc* pARCArc)
         }
     }
 
-	//Libération de la mémoire des arcs entrants (Ancien tableau)
+	//Libï¿½ration de la mï¿½moire des arcs entrants (Ancien tableau)
     for (uiboucle1 = 0; uiboucle1 < uiSOMNbArcsSommetEntrants; uiboucle1++) {
         delete ppARCSOMEntrant[uiboucle1];
         ppARCSOMEntrant[uiboucle1] = nullptr;
@@ -190,10 +190,10 @@ void CSommet::SOMAjouterArcEntrant(CArc* pARCArc)
 }
 
 /******************************************************************************************************
-**** Entrées : pARCArc : CArc*																	   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : pARCArc : CArc*																	   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Supprime CArc dans la liste des arcs entrants du sommet							   ****
+**** Entraï¿½ne : Supprime CArc dans la liste des arcs entrants du sommet							   ****
 ******************************************************************************************************/
 void CSommet::SOMSupprimerArcEntrant(CArc* pARCArc)
 {
@@ -212,7 +212,7 @@ void CSommet::SOMSupprimerArcEntrant(CArc* pARCArc)
         ppARCSOMEntranttmp[uiboucle] = new CArc;
     }
 
-	//Suppression de l'arc à supprimer
+	//Suppression de l'arc ï¿½ supprimer
 	for (uiboucle = 0; uiboucle < SOMLireNbArcsEntrants() - 1; uiboucle++) {
 		if (SOMLireArcsEntrants()[uiboucle] == pARCArc) {
 			uiArcTrouve = 1;
@@ -227,7 +227,7 @@ void CSommet::SOMSupprimerArcEntrant(CArc* pARCArc)
         *ppARCSOMEntranttmp[uiboucle] = *ppARCSOMEntrant[uiboucle];
     }
 
-	//Libération de la mémoire des arcs entrants (Ancien tableau)
+	//Libï¿½ration de la mï¿½moire des arcs entrants (Ancien tableau)
     for (uiboucle = 0; uiboucle < uiSOMNbArcsSommetEntrants; uiboucle++) {
         delete ppARCSOMEntrant[uiboucle];
         ppARCSOMEntrant[uiboucle] = nullptr;
@@ -239,10 +239,10 @@ void CSommet::SOMSupprimerArcEntrant(CArc* pARCArc)
 }
 
 /******************************************************************************************************
-**** Entrées : pARCArc : CArc*																	   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : pARCArc : CArc*																	   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Ajoute CArc dans la liste des arcs sortants du sommet							   ****
+**** Entraï¿½ne : Ajoute CArc dans la liste des arcs sortants du sommet							   ****
 ******************************************************************************************************/
 void CSommet::SOMAjouterArcSortant(CArc* pARCArc)
 {
@@ -258,17 +258,17 @@ void CSommet::SOMAjouterArcSortant(CArc* pARCArc)
         ppARCSOMSortanttmp[uiboucle1] = new CArc;
     }
 
-	//Copie des arcs sortants dans le nouveau tableau et ajout de l'arc à ajouter à la fin de ce tableau
+	//Copie des arcs sortants dans le nouveau tableau et ajout de l'arc ï¿½ ajouter ï¿½ la fin de ce tableau
     for (uiboucle1 = 0; uiboucle1 < uiSOMNbArcsSommetSortants + 1; uiboucle1++) {
         if (uiboucle1 < uiSOMNbArcsSommetSortants) {
-            ppARCSOMSortanttmp[uiboucle1] = ppARCSOMSortant[uiboucle1];
+            *ppARCSOMSortanttmp[uiboucle1] = *ppARCSOMSortant[uiboucle1];
         }
         else {
             *ppARCSOMSortanttmp[uiboucle1] = *pARCArc;
         }
     }
 
-	//Libération de la mémoire des arcs sortants (Ancien tableau)
+	//Libï¿½ration de la mï¿½moire des arcs sortants (Ancien tableau)
     for (uiboucle1 = 0; uiboucle1 < uiSOMNbArcsSommetSortants; uiboucle1++) {
         delete ppARCSOMSortant[uiboucle1];
         ppARCSOMSortant[uiboucle1] = nullptr;
@@ -280,10 +280,10 @@ void CSommet::SOMAjouterArcSortant(CArc* pARCArc)
 }
 
 /******************************************************************************************************
-**** Entrées : pARCArc : CArc*																	   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : pARCArc : CArc*																	   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Supprime CArc dans la liste des arcs sortants du sommet							   ****
+**** Entraï¿½ne : Supprime CArc dans la liste des arcs sortants du sommet							   ****
 ******************************************************************************************************/
 void CSommet::SOMSupprimerArcSortant(CArc* pARCArc)
 {
@@ -302,7 +302,7 @@ void CSommet::SOMSupprimerArcSortant(CArc* pARCArc)
         ppARCSOMSortanttmp[uiboucle] = new CArc;
     }
 
-	//Suppression de l'arc à supprimer
+	//Suppression de l'arc ï¿½ supprimer
     for (uiboucle = 0; uiboucle < SOMLireNbArcsSortants() - 1; uiboucle++) {
         if (SOMLireArcsSortants()[uiboucle] == pARCArc) {
             uiArcTrouve = 1;
@@ -317,7 +317,7 @@ void CSommet::SOMSupprimerArcSortant(CArc* pARCArc)
         ppARCSOMSortanttmp[uiboucle] = ppARCSOMSortant[uiboucle];
     }
 
-	//Libération de la mémoire des arcs sortants (Ancien tableau)
+	//Libï¿½ration de la mï¿½moire des arcs sortants (Ancien tableau)
     for (uiboucle = 0; uiboucle < uiSOMNbArcsSommetSortants; uiboucle++) {
         delete ppARCSOMSortant[uiboucle];
         ppARCSOMSortant[uiboucle] = nullptr;
@@ -328,16 +328,16 @@ void CSommet::SOMSupprimerArcSortant(CArc* pARCArc)
 }
 
 /***************************************************************************************************************************
-**** Entrées : iDestination : int, iParam : int																			****
-**** Nécessite :																		  								****
+**** Entrï¿½es : iDestination : int, iParam : int																			****
+**** Nï¿½cessite :																		  								****
 **** Sorties :																											****
-**** Entraîne : Recherche et renvoie l'arc désiré à partir de sa destination et du fait qu'il soit entrant ou sortant	****
+**** Entraï¿½ne : Recherche et renvoie l'arc dï¿½sirï¿½ ï¿½ partir de sa destination et du fait qu'il soit entrant ou sortant	****
 ***************************************************************************************************************************/
 const CArc* CSommet::SOMRechercheArc(int iDestination, int iParam) const
 {
     unsigned int uiboucle;
 
-	//Spécification de si l'arc à trouver est dans le tableau des arcs entrants ou sortants
+	//Spï¿½cification de si l'arc ï¿½ trouver est dans le tableau des arcs entrants ou sortants
     if (iParam == entrant) {
         for (uiboucle = 0; uiboucle < SOMLireNbArcsEntrants(); uiboucle++) {
             if (SOMLireArcsEntrants()[uiboucle]->ARCLireDestination() == iDestination) {
@@ -356,10 +356,10 @@ const CArc* CSommet::SOMRechercheArc(int iDestination, int iParam) const
 }
 
 /******************************************************************************************************
-**** Entrées : SOMSommet : CSommet																   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : SOMSommet : CSommet																   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Crée un nouvel objet CSommet par copie de SOMSommet								   ****
+**** Entraï¿½ne : Crï¿½e un nouvel objet CSommet par copie de SOMSommet								   ****
 ******************************************************************************************************/
 CSommet& CSommet::operator=(const CSommet SOMSommet)
 {
@@ -378,7 +378,7 @@ CSommet& CSommet::operator=(const CSommet SOMSommet)
         ppARCSOMSortant[uiboucle] = new CArc(*SOMSommet.SOMLireArcsSortants()[uiboucle]);
     }
 
-	//Libération de la mémoire des arcs (Ancien tableau)
+	//Libï¿½ration de la mï¿½moire des arcs (Ancien tableau)
     for (uiboucle = 0; uiboucle < uiSOMNbArcsSommetEntrants; uiboucle++) {
         delete ppARCSOMEntrant[uiboucle];
         ppARCSOMEntrant[uiboucle] = nullptr;

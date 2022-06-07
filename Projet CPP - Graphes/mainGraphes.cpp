@@ -11,23 +11,23 @@
 using namespace std;
 
 /******************************************************************************************************
-**** Entrées : argc : int, argv : char**														   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : argc : int, argv : char**														   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Fonction principale																   ****
+**** Entraï¿½ne : Fonction principale																   ****
 ******************************************************************************************************/
 int main(int argc, char* argv[]) {
 
 	if (argc == 3) {
 
-		//Déclaration des variables du main
+		//Dï¿½claration des variables du main
 		CControleurParseurGraphe* pCONFichierLu = nullptr;
 		CControleurParseurCouplage* pCONFichierCouplageLu = nullptr;
 		int** ppiCouplage = nullptr;
-		CGraphe* pGRAGraphe = nullptr, * pGRAGrapheInverse = nullptr;
+		CGraphe* pGRAGraphe = nullptr;
 		CGrapheOperations COPBoiteAOutils;
 
-		//Lecture du graphe passé en paramètre
+		//Lecture du graphe passï¿½ en paramï¿½tre
 		try {
 			pCONFichierLu = new CControleurParseurGraphe(argv[1]);
 			pCONFichierLu->CONLireFichierGraphe();
@@ -37,12 +37,12 @@ int main(int argc, char* argv[]) {
 				return 1;
 			}
 			else if (EXCException.EXCLireErreur() == EXCCheminVideCtrlParseur) {
-				cout << "Erreur : Chemin de fichier passé en paramètre vide ou nul !" << endl;
+				cout << "Erreur : Chemin de fichier passï¿½ en paramï¿½tre vide ou nul !" << endl;
 				return 1;
 			}
 		}
 		
-		//Lecture du couplage passé en paramètre
+		//Lecture du couplage passï¿½ en paramï¿½tre
 		try {
 			pCONFichierCouplageLu = new CControleurParseurCouplage(argv[2]);
 			pCONFichierCouplageLu->CONLireFichierCouplage();
@@ -52,28 +52,28 @@ int main(int argc, char* argv[]) {
 				return 1;
 			}
 			else if (EXCException.EXCLireErreur() == EXCCheminVideCtrlParseur) {
-				cout << "Erreur : Chemin de fichier passé en paramètre vide ou nul !" << endl;
+				cout << "Erreur : Chemin de fichier passï¿½ en paramï¿½tre vide ou nul !" << endl;
 				return 1;
 			}
 		}
-		/*
-		//Récupération du graphe lu et affichage
+		
+		//Rï¿½cupï¿½ration du graphe lu et affichage
 		try {
 			cout << "-----Graphe lu depuis le fichier :-----" << endl << endl;
 			pGRAGraphe = new CGraphe(*pCONFichierLu->CONLireGraphe());
+			pGRAGraphe->GRAModifierType(false);
 			pGRAGraphe->GRAAffichage();
 		}
 		catch (CException EXCException) {
 			if (EXCException.EXCLireErreur() == EXCArretProgramme) {
 			}
 			else if (EXCException.EXCLireErreur() == EXCListeSommetInexistante) {
-				cout << "Erreur : Liste des sommets du graphes vide, Affichage impossible : Rien à afficher !" << endl;
+				cout << "Erreur : Liste des sommets du graphes vide, Affichage impossible : Rien ï¿½ afficher !" << endl;
 			}
 			return 1;
 		}
-		*/
 		
-		// Exécution du test de couplage
+		// Exï¿½cution du test de couplage
 		try {
 			ppiCouplage = pCONFichierCouplageLu->CONLireCouplage();
 			COPBoiteAOutils.COPTestCouplage(pGRAGraphe, ppiCouplage);
@@ -83,9 +83,8 @@ int main(int argc, char* argv[]) {
 				return 1;
 			}
 		}
-		//Libération de la mémoire allouée dans le main
+		//Libï¿½ration de la mï¿½moire allouï¿½e dans le main
 		delete pGRAGraphe;
-		delete pGRAGrapheInverse;
 		delete pCONFichierLu;
 		delete pCONFichierCouplageLu;
 
