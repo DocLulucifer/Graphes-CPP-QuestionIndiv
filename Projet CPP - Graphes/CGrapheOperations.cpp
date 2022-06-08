@@ -42,7 +42,7 @@ CGraphe * CGrapheOperations::COPNonOriente(const CGraphe* pGRAParam) const
 **** Entrées : pGRAGraphe : CGraphe*, ppARCArcs : CArc**										   ****
 **** Nécessite :																		  	       ****
 **** Sorties : bool																				   ****
-**** Entraîne : Determine si le coupage ppARCArcs est de taille maximale						   ****
+**** Entraîne : Determine si le couplage ppARCArcs est de taille maximale						   ****
 ******************************************************************************************************/
 bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 {
@@ -50,12 +50,12 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 		throw CException(EXCTypeIncorrect);
 	}
 	if(COPEstUnCouplage(ppiArcs) == false) {
-		cout << "Ce n'est pas un couplage" << endl;
+		cout << "C n'est pas un couplage" << endl;
 		return false;
 	}
 	else {
 		unsigned int uiboucle, uiTailleComplementaire = pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
-		cout << "C'est un couplage" << endl;
+		cout << "C est un couplage" << endl;
 		int** ppiEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, ppiArcs);
 		
 		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
@@ -97,47 +97,27 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 	return true;
 }
 
-/*
-1:	function TestCouplage(G,C)
-2:	Si (il existe a1, a2 appartenant à C tel que a1 et a2 ont un sommet en commun) Alors
-3:		Afficher « C n’est pas un couplage»
-4:	Sinon
-5:		Afficher « C est un couplage »
-6:		Pour tout a appartenant à A\C Faire
-5:			C’← C + {a}
-6:			Si (C’ est un couplage) Alors
-7:				Afficher « C n’est pas de taille maximale»
-8:				Fin
-9:			FinSi
-10:		Fin Pour
-11:	Fin Si
-*/
 
 bool CGrapheOperations::COPEstUnCouplage(int** ppiArcs)
 {
 	unsigned int uiboucle, uiboucle2;
 	unsigned int uiTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
+	int ivaleur1, ivaleur2;
 
 	//Si il n'y a qu'un seul arc, il est forcément un couplage
 	if (uiTaille == 1) {
 		return true;
 	}
 
-	//Initialisation, on part du principe que ppiArcs[0][0] != ppiArcs[0][1]
-	int iValeur1 = ppiArcs[0][0], iValeur2 = ppiArcs[0][1];
-	for (uiboucle = 0 ; uiboucle < uiTaille; uiboucle++) {
+	// On teste si le tableau est un couplage
+	for (uiboucle = 0; uiboucle < uiTaille; uiboucle++) {
+		ivaleur1 = ppiArcs[uiboucle][0];
+		ivaleur2 = ppiArcs[uiboucle][1];
 		for (uiboucle2 = uiboucle + 1; uiboucle2 < uiTaille; uiboucle2++) {
-			if (iValeur1 == ppiArcs[uiboucle2][0] || iValeur1 == ppiArcs[uiboucle2][1]) {
+			if (ppiArcs[uiboucle2][0] == ivaleur2 || ppiArcs[uiboucle2][0] == ivaleur1 || ppiArcs[uiboucle2][1] == ivaleur2 || ppiArcs[uiboucle2][1] == ivaleur1) {
 				return false;
 			}
 		}
-		iValeur1 = ppiArcs[uiboucle][0];
-		for (uiboucle2 = uiboucle + 1; uiboucle2 < uiTaille; uiboucle2++) {
-			if (iValeur2 == ppiArcs[uiboucle2][0] || iValeur2 == ppiArcs[uiboucle2][1]) {
-				return false;
-			}
-		}
-		iValeur2 = ppiArcs[uiboucle][1];
 	}
 	return true;
 }

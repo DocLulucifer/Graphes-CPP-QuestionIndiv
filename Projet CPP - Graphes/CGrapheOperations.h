@@ -8,51 +8,52 @@
 #include "CGraphe.h"
 
 class CGrapheOperations {
-public:
-
+private:
 	/******************************************************************************************************
-	**** Entrées : pGRAParam : CGraphe*																   ****
-	**** Nécessite :																		  	       ****
-	**** Sorties : pGRARetour : CGraphe*															   ****
-	**** Entraîne : Crée un nouvel objet CGraphe inverse à pGRAParam								   ****
-	******************************************************************************************************/
-	CGraphe* COPInversion(const CGraphe* pGRAParam) const;
-
-	/******************************************************************************************************
-	**** Entrées : pGRAParam : CGraphe*																   ****
-	**** Nécessite :																		  	       ****
-	**** Sorties : pGRARetour : CGraphe*															   ****
-	**** Entraîne : Crée un nouvel objet CGraphe en copiant pGRAParam mais étant non-orienté		   ****
-	******************************************************************************************************/
-	CGraphe* COPNonOriente(const CGraphe* pGRAParam) const;
-
-	/******************************************************************************************************
-	**** Entrées : pGRAGraphe : CGraphe*, ppARCArcs : CArc**										   ****
-	**** Nécessite :																		  	       ****
-	**** Sorties : bool																				   ****
-	**** Entraîne : Determine si le couplage ppARCArcs est de taille maximale						   ****
-	******************************************************************************************************/
-	bool COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
-	
-	/******************************************************************************************************
-	* Entrées : ppiArcs : int**																		   ****
-	* Nécessite :																			  	       ****
+	* Entrï¿½es : ppiArcs : int**																		   ****
+	* Nï¿½cessite :																			  	       ****
 	* Sorties : bool																				   ****
-	* Entraîne : Deteremine si ppiArcs est un couplage												   ****
+	* Entraï¿½ne : Deteremine si ppiArcs est un couplage												   ****
 	******************************************************************************************************/
 	bool COPEstUnCouplage(int** ppiArcs);
 
 	/******************************************************************************************************
-	* Entrées : ppiArcs : int**, piArcs : int*														   ****
-	* Nécessite :																			  	       ****
+	* Entrï¿½es : ppiArcs : int**, piArcs : int*														   ****
+	* Nï¿½cessite :																			  	       ****
 	* Sorties : bool																				   ****
-	* Entraîne : Ajouter un arc au couplage ppiArcs													   ****
+	* Entraï¿½ne : Ajouter un arc au couplage ppiArcs													   ****
 	******************************************************************************************************/
 	int ** COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs);
 	
 	int** COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
 
 	bool COPEstDansEnsembleArcs(int** ppiEnsembleArcs, int* piArcATester);
+
+public:
+
+	/******************************************************************************************************
+	**** Entrï¿½es : pGRAParam : CGraphe*																   ****
+	**** Nï¿½cessite :																		  	       ****
+	**** Sorties : pGRARetour : CGraphe*															   ****
+	**** Entraï¿½ne : Crï¿½e un nouvel objet CGraphe inverse ï¿½ pGRAParam								   ****
+	******************************************************************************************************/
+	CGraphe* COPInversion(const CGraphe* pGRAParam) const;
+
+	/******************************************************************************************************
+	**** Entrï¿½es : pGRAParam : CGraphe*																   ****
+	**** Nï¿½cessite :																		  	       ****
+	**** Sorties : pGRARetour : CGraphe*															   ****
+	**** Entraï¿½ne : Crï¿½e un nouvel objet CGraphe en copiant pGRAParam mais ï¿½tant non-orientï¿½		   ****
+	******************************************************************************************************/
+	CGraphe* COPNonOriente(const CGraphe* pGRAParam) const;
+
+	/******************************************************************************************************
+	**** Entrï¿½es : pGRAGraphe : CGraphe*, ppARCArcs : CArc**										   ****
+	**** Nï¿½cessite :																		  	       ****
+	**** Sorties : bool																				   ****
+	**** Entraï¿½ne : Determine si le couplage ppARCArcs est de taille maximale						   ****
+	******************************************************************************************************/
+	bool COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
 };
 
 #endif
