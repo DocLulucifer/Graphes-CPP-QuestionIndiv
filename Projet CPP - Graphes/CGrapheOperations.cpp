@@ -62,8 +62,8 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 
 			int* piArcAAjouter = ppiEnsembleComplementaire[uiboucle];
 			int** ppiEnsembleTest = COPAjouterArcAuCouplage(ppiArcs, piArcAAjouter);
-			unsigned int uiTailleEnsembleTest = (sizeof(ppiEnsembleTest) / sizeof(ppiEnsembleTest[0][0])) / 2;
-			
+			unsigned int uiTailleEnsembleTest = (sizeof(ppiEnsembleTest) / sizeof(ppiEnsembleTest[0][0])) / 2 + 1;
+
 			if(COPEstUnCouplage(ppiEnsembleTest) == true) {
 				cout << "Le couplage n'est pas de taille maximale !" << endl;
 				
