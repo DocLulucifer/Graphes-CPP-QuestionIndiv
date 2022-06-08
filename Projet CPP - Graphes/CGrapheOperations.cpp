@@ -51,20 +51,18 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 		throw CException(EXCTypeIncorrect);
 	}
 	if(COPEstUnCouplage(pCOUCouplage) == false) {
-		cout << "C n'est pas un couplage" << endl;
+		cout << "L'ensemble d'arcs passe en parametre n'est pas un couplage !" << endl;
 		return false;
 	}
 	else {
-		cout << pCOUCouplage->COULireNbArcs() << endl;
 		unsigned int uiboucle, uiTailleComplementaire = pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs();
+		int* piArcAAjouter = new int[2];
+		cout << "L'ensemble d'arcs passe en parametre est un couplage !" << endl;
+		
+		cout << endl << "--- Affichage du couplage ---" << endl;
 		pCOUCouplage->COUAfficherCouplage();
 		
-		int* piArcAAjouter = new int[2];
-		cout << "C est un couplage" << endl;
 		CCouplage* pCOUEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, pCOUCouplage);
-		
-		cout << pCOUEnsembleComplementaire->COULireNbArcs() << endl;
-		pCOUEnsembleComplementaire->COUAfficherCouplage();
 		
 		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
 			
@@ -95,6 +93,8 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 		
 		delete[] piArcAAjouter;
 	}
+	cout << "Le couplage est de taille maximale !" << endl;
+	
 	return true;
 }
 
@@ -166,13 +166,12 @@ CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCo
 	int** ppiArcsTMP = new int* [pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs()];
 	int** ppiArcsGraphe = new int* [pGRAGraphe->GRALireNbArcs()];
 	unsigned int uiboucle, uiboucle2, uicompteur = 0;
-	cout << "test1 " << pGRAGraphe->GRALireNbArcs() << endl;
 	
 	// Initialisation du tableau des arcs de pGRAGraphe
 	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs(); uiboucle++) {
 		ppiArcsGraphe[uiboucle] = new int[2];
 	}
-		cout << "test1 " << sizeof(ppiArcsGraphe) / 2 << endl;
+	
 	// Initialisation du tableau des arcs de pGRAGraphe privé de ppiArcs
 	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs(); uiboucle++) {
 		ppiArcsTMP[uiboucle] = new int[2];
@@ -188,8 +187,6 @@ CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCo
 			uicompteur++;
 		}
 	}
-	
-	cout << "test " << sizeof(ppiArcsGraphe)/2 << endl;
 
 	// Selection des arcs de ppiArcsGraphe qui ne sont pas dans ppiArcs
 	uicompteur = 0;
@@ -204,7 +201,7 @@ CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCo
 	// Initialisation du retour de couplage
 	CCouplage* pCOUCouplageRetour = new CCouplage();
 	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs(); uiboucle++) {
-		pCOUCouplage->COUAjouterArc(ppiArcsTMP[uiboucle]);
+		pCOUCouplageRetour->COUAjouterArc(ppiArcsTMP[uiboucle]);
 	}
 	
 	// Libération de la mémoire

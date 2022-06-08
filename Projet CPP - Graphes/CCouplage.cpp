@@ -124,8 +124,6 @@ void CCouplage::COUAfficherCouplage()
 {
 	unsigned int uiboucle;
 
-	cout << endl << "--- Affichage du couplage ---" << endl;
-
 	for (uiboucle = 0; uiboucle < uiNbArcs; uiboucle++) {
 		cout << ppiArcs[uiboucle][0] << " <---> " << ppiArcs[uiboucle][1] << endl;
 	}
