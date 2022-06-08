@@ -60,6 +60,7 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 		int* piArcAAjouter = new int[2];
 		cout << "C est un couplage" << endl;
 		int** ppiEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, ppiArcs);
+		cout << (sizeof(ppiEnsembleComplementaire) / 2) << endl;
 		COPAfficherCouplage(ppiEnsembleComplementaire);
 		
 		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
@@ -110,13 +111,13 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 void CGrapheOperations::COPAfficherCouplage(int** ppiArcs)
 {
 	unsigned int uiboucle;
+
+	cout << endl << "--- Affichage du couplage ---" << endl;
+	
 	for (uiboucle= 0; uiboucle < sizeof(ppiArcs) / 2; uiboucle++) {
-		cout << ppiArcs[uiboucle][0] << " ";
+		cout << ppiArcs[uiboucle][0] << " <---> " << ppiArcs[uiboucle][1] << endl;
 	}
-	cout << endl;
-	for (uiboucle = 0; uiboucle < sizeof(ppiArcs) / 2; uiboucle++) {
-		cout << ppiArcs[uiboucle][1] << " ";
-	}
+	
 	cout << endl;
 }
 
@@ -172,6 +173,7 @@ int ** CGrapheOperations::COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs)
 
 int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 {
+	// Initialisation des variables
 	int** ppiArcsTMP = new int* [pGRAGraphe->GRALireNbArcs() - sizeof(ppiArcs) / 2];
 	int** ppiArcsGraphe = new int* [pGRAGraphe->GRALireNbArcs()];
 	unsigned int uiboucle, uiboucle2, uicompteur = 0;
@@ -180,12 +182,14 @@ int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** pp
 	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs(); uiboucle++) {
 		ppiArcsGraphe[uiboucle] = new int[2];
 	}
-	
+		cout << "test1 " << sizeof(ppiArcsGraphe) / 2 << endl;
 	// Initialisation du tableau des arcs de pGRAGraphe privé de ppiArcs
-	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - sizeof(ppiArcs) / 2; uiboucle++) {
+	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / 2); uiboucle++) {
 		ppiArcsTMP[uiboucle] = new int[2];
 	}
 	
+
+
 	// Copie des arcs de pGRAGraphe en un tableau de int**
 	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbSommet(); uiboucle++) {
 		for (uiboucle2 = 0; uiboucle2 < pGRAGraphe->GRALireSommets()[uiboucle]->SOMLireNbArcsSortants(); uiboucle2++) {
@@ -195,6 +199,8 @@ int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** pp
 		}
 	}
 	
+	cout << "test " << sizeof(ppiArcsGraphe)/2 << endl;
+
 	// Selection des arcs de ppiArcsGraphe qui ne sont pas dans ppiArcs
 	uicompteur = 0;
 	for (uiboucle = 0 ; uiboucle < pGRAGraphe->GRALireNbArcs(); uiboucle++) {
