@@ -54,15 +54,21 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 		return false;
 	}
 	else {
-		unsigned int uiboucle, uiTailleComplementaire = pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
+		cout << (sizeof(ppiArcs)/2) << endl;
+		unsigned int uiboucle, uiTailleComplementaire = pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / 2);
+		COPAfficherCouplage(ppiArcs);
+		int* piArcAAjouter = new int[2];
 		cout << "C est un couplage" << endl;
 		int** ppiEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, ppiArcs);
+		COPAfficherCouplage(ppiEnsembleComplementaire);
 		
 		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
-
-			int* piArcAAjouter = ppiEnsembleComplementaire[uiboucle];
+			
+			piArcAAjouter[0] = ppiEnsembleComplementaire[uiboucle][0];
+			piArcAAjouter[1] = ppiEnsembleComplementaire[uiboucle][1];
+			
 			int** ppiEnsembleTest = COPAjouterArcAuCouplage(ppiArcs, piArcAAjouter);
-			unsigned int uiTailleEnsembleTest = (sizeof(ppiEnsembleTest) / sizeof(ppiEnsembleTest[0][0])) / 2 + 1;
+			unsigned int uiTailleEnsembleTest = sizeof(ppiEnsembleTest) / 2 + 1;
 
 			if(COPEstUnCouplage(ppiEnsembleTest) == true) {
 				cout << "Le couplage n'est pas de taille maximale !" << endl;
@@ -78,6 +84,8 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 				}
 				delete[] ppiEnsembleTest;
 				
+				delete[] piArcAAjouter;
+
 				return false;
 			}
 			
@@ -93,15 +101,30 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 			delete[] ppiEnsembleComplementaire[uiboucle];
 		}
 		delete[] ppiEnsembleComplementaire;
+		
+		delete[] piArcAAjouter;
 	}
 	return true;
+}
+
+void CGrapheOperations::COPAfficherCouplage(int** ppiArcs)
+{
+	unsigned int uiboucle;
+	for (uiboucle= 0; uiboucle < sizeof(ppiArcs) / 2; uiboucle++) {
+		cout << ppiArcs[uiboucle][0] << " ";
+	}
+	cout << endl;
+	for (uiboucle = 0; uiboucle < sizeof(ppiArcs) / 2; uiboucle++) {
+		cout << ppiArcs[uiboucle][1] << " ";
+	}
+	cout << endl;
 }
 
 
 bool CGrapheOperations::COPEstUnCouplage(int** ppiArcs)
 {
 	unsigned int uiboucle, uiboucle2;
-	unsigned int uiTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
+	unsigned int uiTaille = sizeof(ppiArcs) / 2;
 	int ivaleur1, ivaleur2;
 
 	//Si il n'y a qu'un seul arc, il est forcément un couplage
@@ -125,7 +148,7 @@ bool CGrapheOperations::COPEstUnCouplage(int** ppiArcs)
 int ** CGrapheOperations::COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs)
 {
 	// Initialisation des variables
-	unsigned int uiTaille = (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2;
+	unsigned int uiTaille = sizeof(ppiArcs) / 2;
 	unsigned int uiboucle;
 
 	// Création du tableau temporaire
@@ -149,7 +172,7 @@ int ** CGrapheOperations::COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs)
 
 int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 {
-	int** ppiArcsTMP = new int* [pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2];
+	int** ppiArcsTMP = new int* [pGRAGraphe->GRALireNbArcs() - sizeof(ppiArcs) / 2];
 	int** ppiArcsGraphe = new int* [pGRAGraphe->GRALireNbArcs()];
 	unsigned int uiboucle, uiboucle2, uicompteur = 0;
 	
@@ -159,7 +182,7 @@ int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** pp
 	}
 	
 	// Initialisation du tableau des arcs de pGRAGraphe privé de ppiArcs
-	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - (sizeof(ppiArcs) / sizeof(ppiArcs[0][0])) / 2; uiboucle++) {
+	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - sizeof(ppiArcs) / 2; uiboucle++) {
 		ppiArcsTMP[uiboucle] = new int[2];
 	}
 	
@@ -195,7 +218,7 @@ int** CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, int** pp
 bool CGrapheOperations::COPEstDansEnsembleArcs(int** ppiEnsembleArcs, int* piArcATester)
 {
 	// Initialisation des variables
-	unsigned int uiTaille = (sizeof(ppiEnsembleArcs) / sizeof(ppiEnsembleArcs[0][0])) / 2;
+	unsigned int uiTaille = sizeof(ppiEnsembleArcs) / 2;
 	unsigned int uiboucle;
 	
 	// Parcours du tableau

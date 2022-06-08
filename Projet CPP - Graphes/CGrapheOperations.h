@@ -54,6 +54,8 @@ public:
 	**** Entra�ne : Determine si le couplage ppARCArcs est de taille maximale						   ****
 	******************************************************************************************************/
 	bool COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
+
+	void COPAfficherCouplage(int ** ppiArcs);
 };
 
 #endif
