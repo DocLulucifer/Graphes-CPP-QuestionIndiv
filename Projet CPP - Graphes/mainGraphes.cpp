@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
 		
 		// Ex�cution du test de couplage
 		try {
-			pCOUCouplageLu = pCONFichierCouplageLu->CONLireCouplage();
+			pCOUCouplageLu = new CCouplage(*pCONFichierCouplageLu->CONLireCouplage());
 			COPBoiteAOutils.COPTestCouplage(pGRAGraphe, pCOUCouplageLu);
 		}
 		catch (CException EXCException) {
@@ -86,6 +86,7 @@ int main(int argc, char* argv[]) {
 		}
 		//Lib�ration de la m�moire allou�e dans le main
 		delete pGRAGraphe;
+		delete pCOUCouplageLu;
 		delete pCONFichierLu;
 		delete pCONFichierCouplageLu;
 
