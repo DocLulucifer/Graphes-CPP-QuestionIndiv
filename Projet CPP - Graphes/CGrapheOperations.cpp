@@ -84,17 +84,14 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 			}
 			
 			// Libération de la mémoire avant nouveau test			
-			
 			delete pCOUEnsembleTest;
 		}
 		
 		// Libération de la mémoire avant retour
 		delete pCOUEnsembleComplementaire;
-		
 		delete[] piArcAAjouter;
 	}
 	cout << "Le couplage est de taille maximale !" << endl;
-	
 	return true;
 }
 
