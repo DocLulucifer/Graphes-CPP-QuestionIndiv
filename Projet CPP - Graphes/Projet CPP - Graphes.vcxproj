@@ -159,6 +159,7 @@
     <ClCompile Include="CArc.cpp" />
     <ClCompile Include="CControleurParseurCouplage.cpp" />
     <ClCompile Include="CControleurParseurGraphe.cpp" />
+    <ClCompile Include="CCouplage.cpp" />
     <ClCompile Include="CException.cpp" />
     <ClCompile Include="CFichier.cpp" />
     <ClCompile Include="CGraphe.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="CArc.h" />
     <ClInclude Include="CControleurParseurCouplage.h" />
     <ClInclude Include="CControleurParseurGraphe.h" />
+    <ClInclude Include="CCouplage.h" />
     <ClInclude Include="CException.h" />
     <ClInclude Include="CFichier.h" />
     <ClInclude Include="CGraphe.h" />

@@ -6,6 +6,7 @@
 #define EXCTypeIncorrect 60
 
 #include "CGraphe.h"
+#include "CCouplage.h"
 
 class CGrapheOperations {
 private:
@@ -15,7 +16,7 @@ private:
 	* Sorties : bool																				   ****
 	* Entra�ne : Deteremine si ppiArcs est un couplage												   ****
 	******************************************************************************************************/
-	bool COPEstUnCouplage(int** ppiArcs);
+	bool COPEstUnCouplage(CCouplage * pCOUCouplage);
 
 	/******************************************************************************************************
 	* Entr�es : ppiArcs : int**, piArcs : int*														   ****
@@ -23,11 +24,11 @@ private:
 	* Sorties : bool																				   ****
 	* Entra�ne : Ajouter un arc au couplage ppiArcs													   ****
 	******************************************************************************************************/
-	int ** COPAjouterArcAuCouplage(int** ppiArcs, int* piArcs);
+	CCouplage* COPAjouterArcAuCouplage(CCouplage* pCOUCouplage, int* piArcs);
 	
-	int** COPComplementaireCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
+	CCouplage* COPComplementaireCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCouplage);
 
-	bool COPEstDansEnsembleArcs(int** ppiEnsembleArcs, int* piArcATester);
+	bool COPEstDansEnsembleArcs(CCouplage* pCOUCouplage, int* piArcATester);
 
 public:
 
@@ -53,9 +54,8 @@ public:
 	**** Sorties : bool																				   ****
 	**** Entra�ne : Determine si le couplage ppARCArcs est de taille maximale						   ****
 	******************************************************************************************************/
-	bool COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs);
+	bool COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCouplage);
 
-	void COPAfficherCouplage(int ** ppiArcs);
 };
 
 #endif

@@ -10,8 +10,7 @@
 CControleurParseurCouplage::CControleurParseurCouplage()
 {
 	pcCONChemin = nullptr;
-	uiCONNombreCouplage = 0;
-	ppiCouplage = nullptr;
+	pCOUCouplage = new CCouplage();
 }
 
 /***********************************************************************************************************************
@@ -23,8 +22,7 @@ CControleurParseurCouplage::CControleurParseurCouplage()
 CControleurParseurCouplage::CControleurParseurCouplage(char* pcChemin)
 {
 	pcCONChemin = pcChemin;
-	uiCONNombreCouplage = 0;
-	ppiCouplage = nullptr;
+	pCOUCouplage = new CCouplage();
 }
 
 /******************************************************************************************************
@@ -35,16 +33,9 @@ CControleurParseurCouplage::CControleurParseurCouplage(char* pcChemin)
 ******************************************************************************************************/
 CControleurParseurCouplage::~CControleurParseurCouplage()
 {
-	unsigned int uiboucle;
 	pcCONChemin = nullptr;
-	
-	for (uiboucle = 0 ; uiboucle < uiCONNombreCouplage; uiboucle++)
-	{
-		delete[] ppiCouplage[uiboucle];
-	}
-	delete[] ppiCouplage;
-	ppiCouplage = nullptr;
-	uiCONNombreCouplage = 0;	
+	delete pCOUCouplage;
+	pCOUCouplage = nullptr;	
 }
 
 /******************************************************************************************************
@@ -71,7 +62,7 @@ void CControleurParseurCouplage::CONModifierChemin(char* pcChemin)
 
 unsigned int CControleurParseurCouplage::CONLireNombreCouplage()
 {
-	return uiCONNombreCouplage;
+	return pCOUCouplage->COULireNbArcs();
 }
 
 /******************************************************************************************************
@@ -80,9 +71,9 @@ unsigned int CControleurParseurCouplage::CONLireNombreCouplage()
 **** Sorties :	pcConChemin : char*																   ****
 **** Entra�ne : Renvoie le chemin d'acc�s au fichier de lecture									   ****
 ******************************************************************************************************/
-int** CControleurParseurCouplage::CONLireCouplage()
+CCouplage* CControleurParseurCouplage::CONLireCouplage()
 {
-	return ppiCouplage;
+	return pCOUCouplage;
 }
 
 /******************************************************************************************************
@@ -175,6 +166,13 @@ void CControleurParseurCouplage::CONLireFichierCouplage()
 	}
 
 	//Affectation Couplage
-	uiCONNombreCouplage = uiNbArcs;
-	ppiCouplage = ppiArcs;
+	for (uiBoucle = 0; uiBoucle < uiNbArcs; uiBoucle++) {
+		pCOUCouplage->COUAjouterArc(ppiArcs[uiBoucle]);
+	}
+
+	//Lib�ration m�moire
+	for (uiBoucle = 0; uiBoucle < uiNbArcs; uiBoucle++) {
+		delete[] ppiArcs[uiBoucle];
+	}
+	delete[] ppiArcs;
 }

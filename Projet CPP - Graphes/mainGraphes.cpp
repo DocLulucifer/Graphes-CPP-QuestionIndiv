@@ -3,6 +3,7 @@
 #include "CControleurParseurGraphe.h"
 #include "CControleurParseurCouplage.h"
 #include "CGrapheOperations.h"
+#include "CCouplage.h"
 #include <cstdio>
 #include <cstdlib>
 
@@ -23,7 +24,7 @@ int main(int argc, char* argv[]) {
 		//D�claration des variables du main
 		CControleurParseurGraphe* pCONFichierLu = nullptr;
 		CControleurParseurCouplage* pCONFichierCouplageLu = nullptr;
-		int** ppiCouplage = nullptr;
+		CCouplage* pCOUCouplageLu = nullptr;
 		CGraphe* pGRAGraphe = nullptr;
 		CGrapheOperations COPBoiteAOutils;
 
@@ -75,8 +76,8 @@ int main(int argc, char* argv[]) {
 		
 		// Ex�cution du test de couplage
 		try {
-			ppiCouplage = pCONFichierCouplageLu->CONLireCouplage();
-			COPBoiteAOutils.COPTestCouplage(pGRAGraphe, ppiCouplage);
+			pCOUCouplageLu = pCONFichierCouplageLu->CONLireCouplage();
+			COPBoiteAOutils.COPTestCouplage(pGRAGraphe, pCOUCouplageLu);
 		}
 		catch (CException EXCException) {
 			if (EXCException.EXCLireErreur() == EXCArretProgramme) {

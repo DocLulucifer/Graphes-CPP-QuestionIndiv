@@ -2,6 +2,7 @@
 #define CONTROL_PARSER_COUPLAGE
 
 #include "CFichier.h"
+#include "CCouplage.h"
 
 #define EXCArretProgramme 50
 
@@ -10,8 +11,7 @@
 class CControleurParseurCouplage {
 private:
 	char* pcCONChemin;
-	int** ppiCouplage;
-	unsigned int uiCONNombreCouplage;
+	CCouplage* pCOUCouplage;
 public:
 
 	/******************************************************************************************************
@@ -62,7 +62,7 @@ public:
 	**** Sorties :	pcConChemin : char*																   ****
 	**** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
 	******************************************************************************************************/
-	int** CONLireCouplage();
+	CCouplage* CONLireCouplage();
 
 	/******************************************************************************************************
 	**** Entrées :																					   ****
