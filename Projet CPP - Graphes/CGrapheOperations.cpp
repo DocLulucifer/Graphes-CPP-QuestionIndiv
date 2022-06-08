@@ -59,8 +59,11 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 		int** ppiEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, ppiArcs);
 		
 		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
+
 			int* piArcAAjouter = ppiEnsembleComplementaire[uiboucle];
 			int** ppiEnsembleTest = COPAjouterArcAuCouplage(ppiArcs, piArcAAjouter);
+			unsigned int uiTailleEnsembleTest = (sizeof(ppiEnsembleTest) / sizeof(ppiEnsembleTest[0][0])) / 2;
+			
 			if(COPEstUnCouplage(ppiEnsembleTest) == true) {
 				cout << "Le couplage n'est pas de taille maximale !" << endl;
 				
@@ -70,7 +73,7 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 				}
 				delete[] ppiEnsembleComplementaire;
 
-				for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
+				for (uiboucle = 0; uiboucle < uiTailleEnsembleTest; uiboucle++) {
 					delete[] ppiEnsembleTest[uiboucle];
 				}
 				delete[] ppiEnsembleTest;
@@ -79,7 +82,7 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, int** ppiArcs)
 			}
 			
 			// Libération de la mémoire avant nouveau test			
-			for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
+			for (uiboucle = 0; uiboucle < uiTailleEnsembleTest; uiboucle++) {
 				delete[] ppiEnsembleTest[uiboucle];
 			}
 			delete[] ppiEnsembleTest;

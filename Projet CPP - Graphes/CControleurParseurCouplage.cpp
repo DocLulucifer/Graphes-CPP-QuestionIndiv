@@ -2,10 +2,10 @@
 
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :	CControleurParseur																   ****
-**** Entraîne : La construction d'un objet CControleurParseur par défaut						   ****
+**** Entraï¿½ne : La construction d'un objet CControleurParseur par dï¿½faut						   ****
 ******************************************************************************************************/
 CControleurParseurCouplage::CControleurParseurCouplage()
 {
@@ -15,10 +15,10 @@ CControleurParseurCouplage::CControleurParseurCouplage()
 }
 
 /***********************************************************************************************************************
-**** Entrées : pcChemin : char*																						****
-**** Nécessite :																		  							****
+**** Entrï¿½es : pcChemin : char*																						****
+**** Nï¿½cessite :																		  							****
 **** Sorties :	CControleurParseur																					****
-**** Entraîne : La construction d'un objet CControleurParseur possédant un chemin d'accès à un fichier de lecture	****
+**** Entraï¿½ne : La construction d'un objet CControleurParseur possï¿½dant un chemin d'accï¿½s ï¿½ un fichier de lecture	****
 ***********************************************************************************************************************/
 CControleurParseurCouplage::CControleurParseurCouplage(char* pcChemin)
 {
@@ -28,10 +28,10 @@ CControleurParseurCouplage::CControleurParseurCouplage(char* pcChemin)
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : La destruction de l'objet CControleurParseur									   ****
+**** Entraï¿½ne : La destruction de l'objet CControleurParseur									   ****
 ******************************************************************************************************/
 CControleurParseurCouplage::~CControleurParseurCouplage()
 {
@@ -40,7 +40,7 @@ CControleurParseurCouplage::~CControleurParseurCouplage()
 	
 	for (uiboucle = 0 ; uiboucle < uiCONNombreCouplage; uiboucle++)
 	{
-		delete ppiCouplage[uiboucle];
+		delete[] ppiCouplage[uiboucle];
 	}
 	delete[] ppiCouplage;
 	ppiCouplage = nullptr;
@@ -48,10 +48,10 @@ CControleurParseurCouplage::~CControleurParseurCouplage()
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :	pcConChemin : char*																   ****
-**** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
+**** Entraï¿½ne : Renvoie le chemin d'accï¿½s au fichier de lecture									   ****
 ******************************************************************************************************/
 char* CControleurParseurCouplage::CONLireChemin()
 {
@@ -59,10 +59,10 @@ char* CControleurParseurCouplage::CONLireChemin()
 }
 
 /******************************************************************************************************
-**** Entrées : pcChemin : char*																	   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es : pcChemin : char*																	   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Modifie le chemin d'accès au fichier de lecture									   ****
+**** Entraï¿½ne : Modifie le chemin d'accï¿½s au fichier de lecture									   ****
 ******************************************************************************************************/
 void CControleurParseurCouplage::CONModifierChemin(char* pcChemin)
 {
@@ -75,10 +75,10 @@ unsigned int CControleurParseurCouplage::CONLireNombreCouplage()
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :	pcConChemin : char*																   ****
-**** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
+**** Entraï¿½ne : Renvoie le chemin d'accï¿½s au fichier de lecture									   ****
 ******************************************************************************************************/
 int** CControleurParseurCouplage::CONLireCouplage()
 {
@@ -86,10 +86,10 @@ int** CControleurParseurCouplage::CONLireCouplage()
 }
 
 /******************************************************************************************************
-**** Entrées :																					   ****
-**** Nécessite :																		  	       ****
+**** Entrï¿½es :																					   ****
+**** Nï¿½cessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entraîne : Lis le fichier de lecture														   ****
+**** Entraï¿½ne : Lis le fichier de lecture														   ****
 ******************************************************************************************************/
 void CControleurParseurCouplage::CONLireFichierCouplage()
 {
@@ -103,7 +103,7 @@ void CControleurParseurCouplage::CONLireFichierCouplage()
 	unsigned int uiBoucle;
 	int** ppiArcs = nullptr;
 
-	//Récupération du nombre d'arcs
+	//Rï¿½cupï¿½ration du nombre d'arcs
 	try {
 		uiNbArcs = FICParseur.FICLireChiffre((char*)"nbarcs");
 	}
@@ -139,7 +139,7 @@ void CControleurParseurCouplage::CONLireFichierCouplage()
 		throw CException(EXCArretProgramme);
 	}
 	
-	//Récupération des arcs
+	//Rï¿½cupï¿½ration des arcs
 	try {
 		ppiArcs = FICParseur.FICLireTabAvecVirgule(uiNbArcs, (char*)"arcs", (char*)"debut", (char*)"fin");
 	}
@@ -175,6 +175,6 @@ void CControleurParseurCouplage::CONLireFichierCouplage()
 	}
 
 	//Affectation Couplage
-	
+	uiCONNombreCouplage = uiNbArcs;
 	ppiCouplage = ppiArcs;
 }
