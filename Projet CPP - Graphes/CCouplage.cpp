@@ -34,11 +34,17 @@ CCouplage::~CCouplage()
 
 int CCouplage::COULireValeur(unsigned int uiIndice1, unsigned int uiIndice2)
 {
+	if (!(uiIndice1 < uiNbArcs && uiIndice2 < 2)) {
+		throw CException(EXCErreurSegmentation);
+	}
 	return ppiArcs[uiIndice1][uiIndice2];
 }
 
 void CCouplage::COUEcritureValeur(unsigned int uiIndice1, unsigned int uiIndice2, int iValeur)
 {
+	if (!(uiIndice1 < uiNbArcs && uiIndice2 < 2)) {
+		throw CException(EXCErreurSegmentation);
+	}
 	ppiArcs[uiIndice1][uiIndice2] = iValeur;
 }
 
@@ -49,6 +55,9 @@ unsigned int CCouplage::COULireNbArcs()
 
 void CCouplage::COUAjouterArc(int* piArc)
 {
+	if (piArc == nullptr) {
+		throw CException(EXCPointeurAjoutArcNul);
+	}
 	unsigned int uiboucle;
 	int** ppiNouveau = new int* [uiNbArcs + 1];
 	for (uiboucle = 0; uiboucle < uiNbArcs + 1; uiboucle++) {
@@ -73,6 +82,9 @@ void CCouplage::COUAjouterArc(int* piArc)
 
 void CCouplage::COUSupprimerArc(unsigned int uiIndice)
 {
+	if (!(uiIndice < uiNbArcs)) {
+		throw CException(EXCSuppArcCouplageImpossible);
+	}
 	int** ppiNouveau = new int* [uiNbArcs - 1];
 	unsigned int uiboucle, uiArcTrouve = 0;
 	for (uiboucle = 0; uiboucle < uiboucle - 1; uiboucle++) {

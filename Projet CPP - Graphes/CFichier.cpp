@@ -153,6 +153,11 @@ int* CFichier::FICLireTabSansVirgule(const unsigned int uiNbLignes, char* pcTag1
 				throw CException(EXCBaliseIncorrecte);
 			}
 		}
+		FICLigneSuivante(pcLigne);
+		char* pcToken = strtok(pcLigne, "=");
+		if (FICVerifBalise(pcToken, "numero") == true) {
+			throw CException(EXCNbLigneIns);
+		}
 
 		//Retour en haut du fichier pour les prochaines utilisations du flot
 		IFSFICFichier.clear();
@@ -244,6 +249,12 @@ int** CFichier::FICLireTabAvecVirgule(const unsigned int uiNbLignes, char* pcTag
 				throw CException(EXCBaliseIncorrecte);
 			}
 			
+		}
+		FICLigneSuivante(pcLigne);
+		char* pcToken = strtok(pcLigne, ",");
+		char* pcToken2 = strtok(pcToken, "=");
+		if (FICVerifBalise(pcToken2, "debut") == true) {
+			throw CException(EXCNbLigneIns);
 		}
 
 		//Retour en haut du fichier pour les prochaines utilisations du flot

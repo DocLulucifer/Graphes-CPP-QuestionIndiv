@@ -4,6 +4,10 @@
 
 #define COPGRAPHES
 #define EXCTypeIncorrect 60
+#define EXCPointeurCouplageNul 61
+#define EXCPointeurGrapheNul 62
+#define EXCCouplageVide 63
+
 
 #include "CGraphe.h"
 #include "CCouplage.h"

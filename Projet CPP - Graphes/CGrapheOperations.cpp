@@ -50,7 +50,25 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 	if (pGRAGraphe->GRALireType() == true) {
 		throw CException(EXCTypeIncorrect);
 	}
-	if(COPEstUnCouplage(pCOUCouplage) == false) {
+	
+	bool bRetour;
+	try {
+		bRetour = COPEstUnCouplage(pCOUCouplage);
+	}
+	catch (CException EXCException) {
+		cout << "Erreur Interne dans TestCouplage : Dans COPEstUnCouplage :" << endl;
+
+		if (EXCException.EXCLireErreur() == EXCPointeurCouplageNul) {
+			cout << "Le pointeur de couplage est nul !" << endl;
+		}
+		if (EXCException.EXCLireErreur() == EXCCouplageVide) {
+			cout << "Le couplage est vide !" << endl;
+		}
+
+		throw CException(EXCArretProgramme);
+	}
+	
+	if (bRetour == false) {
 		cout << "L'ensemble d'arcs passe en parametre n'est pas un couplage !" << endl;
 		return false;
 	}
@@ -62,26 +80,80 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 		cout << endl << "--- Affichage du couplage ---" << endl;
 		pCOUCouplage->COUAfficherCouplage();
 		
-		CCouplage* pCOUEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, pCOUCouplage);
+		CCouplage* pCOUEnsembleComplementaire = nullptr;
+		try {
+			pCOUEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, pCOUCouplage);
+		}
+		catch (CException EXCException) {
+			cout << "Erreur Interne dans TestCouplage : Dans COPComplementaireCouplage :" << endl;
+
+			if (EXCException.EXCLireErreur() == EXCPointeurCouplageNul) {
+				cout << "Le pointeur de couplage est nul !" << endl;
+			}
+			if (EXCException.EXCLireErreur() == EXCPointeurGrapheNul) {
+				cout << "Le pointeur de graphe est nul !" << endl;
+			}
+
+			throw CException(EXCArretProgramme);
+		}
 		
 		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
 			
-			piArcAAjouter[0] = pCOUEnsembleComplementaire->COULireValeur(uiboucle, 0);
-			piArcAAjouter[1] = pCOUEnsembleComplementaire->COULireValeur(uiboucle, 0);
+			try {
+				piArcAAjouter[0] = pCOUEnsembleComplementaire->COULireValeur(uiboucle, 0);
+				piArcAAjouter[1] = pCOUEnsembleComplementaire->COULireValeur(uiboucle, 0);
+			}
+			catch (CException EXCException) {
+				cout << "Erreur Interne dans TestCouplage : Dans COULireValeur :" << endl;
+
+				if (EXCException.EXCLireErreur() == EXCErreurSegmentation) {
+					cout << "SIGSEGV : Accès en lecture interdit !" << endl;
+				}
+				throw CException(EXCArretProgramme);
+			}
 			
-			CCouplage* pCOUEnsembleTest = COPAjouterArcAuCouplage(pCOUCouplage, piArcAAjouter);
+			CCouplage* pCOUEnsembleTest = nullptr;
+			try {
+				pCOUEnsembleTest = COPAjouterArcAuCouplage(pCOUCouplage, piArcAAjouter);
+			}
+			catch (CException EXCException) {
+				cout << "Erreur Interne dans TestCouplage : Dans COPAjouterArcAuCouplage :" << endl;
+
+				if (EXCException.EXCLireErreur() == EXCPointeurCouplageNul) {
+					cout << "Le pointeur de couplage est nul !" << endl;
+				}
+				if (EXCException.EXCLireErreur() == EXCPointeurArcNul) {
+					cout << "Le pointeur d'arc a ajouter est nul !" << endl;
+				}
+				throw CException(EXCArretProgramme);
+			}
 			unsigned int uiTailleEnsembleTest = pCOUEnsembleTest->COULireNbArcs();
 
-			if(COPEstUnCouplage(pCOUEnsembleTest) == true) {
-				cout << "Le couplage n'est pas de taille maximale !" << endl;
-				
-				// Libération de la mémoire avant retour
-				delete pCOUEnsembleComplementaire;
-				delete pCOUEnsembleTest;
-				delete[] piArcAAjouter;
+			try {
+				if (COPEstUnCouplage(pCOUEnsembleTest) == true) {
+					cout << "Le couplage n'est pas de taille maximale !" << endl;
 
-				return false;
+					// Libération de la mémoire avant retour
+					delete pCOUEnsembleComplementaire;
+					delete pCOUEnsembleTest;
+					delete[] piArcAAjouter;
+
+					return false;
+				}
 			}
+			catch (CException EXCException) {
+				cout << "Erreur Interne dans TestCouplage : Dans COPEstUnCouplage :" << endl;
+				
+				if (EXCException.EXCLireErreur() == EXCPointeurCouplageNul) {
+					cout << "Le pointeur de couplage est nul !" << endl;
+				}
+				if (EXCException.EXCLireErreur() == EXCCouplageVide) {
+					cout << "Le couplage est vide !" << endl;
+				}
+				
+				throw CException(EXCArretProgramme);
+			}
+			
 			
 			// Libération de la mémoire avant nouveau test			
 			delete pCOUEnsembleTest;
@@ -98,10 +170,18 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 
 bool CGrapheOperations::COPEstUnCouplage(CCouplage* pCOUCouplage)
 {
+	if (pCOUCouplage == nullptr) {
+		throw CException(EXCPointeurCouplageNul);
+	}
+
 	unsigned int uiboucle, uiboucle2;
 	unsigned int uiTaille = pCOUCouplage->COULireNbArcs();
 	int ivaleur1, ivaleur2;
 
+	if (uiTaille == 0) {
+		throw CException(EXCCouplageVide);
+	}
+	
 	//Si il n'y a qu'un seul arc, il est forcément un couplage
 	if (uiTaille == 1) {
 		return true;
@@ -109,11 +189,31 @@ bool CGrapheOperations::COPEstUnCouplage(CCouplage* pCOUCouplage)
 
 	// On teste si le tableau est un couplage
 	for (uiboucle = 0; uiboucle < uiTaille; uiboucle++) {
-		ivaleur1 = pCOUCouplage->COULireValeur(uiboucle, 0);
-		ivaleur2 = pCOUCouplage->COULireValeur(uiboucle, 1);
+		try {
+			ivaleur1 = pCOUCouplage->COULireValeur(uiboucle, 0);
+			ivaleur2 = pCOUCouplage->COULireValeur(uiboucle, 1);
+		}
+		catch (CException EXCException) {
+			cout << "Dans TestCouplage : Dans COULireValeur :" << endl;
+
+			if (EXCException.EXCLireErreur() == EXCErreurSegmentation) {
+				cout << "SIGSEGV : Accès en lecture interdit !" << endl;
+			}
+			throw CException(EXCArretProgramme);
+		}
 		for (uiboucle2 = uiboucle + 1; uiboucle2 < uiTaille; uiboucle2++) {
-			if (pCOUCouplage->COULireValeur(uiboucle2, 0) == ivaleur2 || pCOUCouplage->COULireValeur(uiboucle2, 0) == ivaleur1 || pCOUCouplage->COULireValeur(uiboucle2, 1) == ivaleur2 || pCOUCouplage->COULireValeur(uiboucle2, 1) == ivaleur1) {
-				return false;
+			try {
+				if (pCOUCouplage->COULireValeur(uiboucle2, 0) == ivaleur2 || pCOUCouplage->COULireValeur(uiboucle2, 0) == ivaleur1 || pCOUCouplage->COULireValeur(uiboucle2, 1) == ivaleur2 || pCOUCouplage->COULireValeur(uiboucle2, 1) == ivaleur1) {
+					return false;
+				}
+			}
+			catch (CException EXCException) {
+				cout << "Dans TestCouplage : Dans COULireValeur :" << endl;
+
+				if (EXCException.EXCLireErreur() == EXCErreurSegmentation) {
+					cout << "SIGSEGV : Accès en lecture interdit !" << endl;
+				}
+				throw CException(EXCArretProgramme);
 			}
 		}
 	}
@@ -122,6 +222,13 @@ bool CGrapheOperations::COPEstUnCouplage(CCouplage* pCOUCouplage)
 
 CCouplage* CGrapheOperations::COPAjouterArcAuCouplage(CCouplage* pCOUCouplage, int* piArcs)
 {
+	if (pCOUCouplage == nullptr) {
+		throw CException(EXCPointeurCouplageNul);
+	}
+	if (piArcs == nullptr) {
+		throw CException(EXCPointeurArcNul);
+	}
+	
 	// Initialisation des variables
 	unsigned int uiTaille = pCOUCouplage->COULireNbArcs();
 	unsigned int uiboucle;
@@ -134,8 +241,18 @@ CCouplage* CGrapheOperations::COPAjouterArcAuCouplage(CCouplage* pCOUCouplage, i
 
 	// Copie des arcs
 	for (uiboucle = 0; uiboucle < uiTaille; uiboucle++) {
-		ppiNouvelEnsemble[uiboucle][0] = pCOUCouplage->COULireValeur(uiboucle, 0);
-		ppiNouvelEnsemble[uiboucle][1] = pCOUCouplage->COULireValeur(uiboucle, 1);
+		try {
+			ppiNouvelEnsemble[uiboucle][0] = pCOUCouplage->COULireValeur(uiboucle, 0);
+			ppiNouvelEnsemble[uiboucle][1] = pCOUCouplage->COULireValeur(uiboucle, 1);
+		}
+		catch (CException EXCException) {
+			cout << "Dans COPAjouterArcAuCouplage : Dans COULireValeur :" << endl;
+
+			if (EXCException.EXCLireErreur() == EXCErreurSegmentation) {
+				cout << "SIGSEGV : Accès en lecture interdit !" << endl;
+			}
+			throw CException(EXCArretProgramme);
+		}
 	}
 	
 	// Ajout de l'arc
@@ -145,7 +262,17 @@ CCouplage* CGrapheOperations::COPAjouterArcAuCouplage(CCouplage* pCOUCouplage, i
 	// Initialisation du retour de couplage
 	CCouplage* pCOURetour = new CCouplage();
 	for (uiboucle = 0; uiboucle < uiTaille + 1; uiboucle++) {
-		pCOURetour->COUAjouterArc(ppiNouvelEnsemble[uiboucle]);
+		try {
+			pCOURetour->COUAjouterArc(ppiNouvelEnsemble[uiboucle]);
+		}
+		catch (CException EXCException) {
+			cout << "Dans COPAjouterArcAuCouplage : Dans COUAjouterArc :" << endl;
+
+			if (EXCException.EXCLireErreur() == EXCPointeurAjoutArcNul) {
+				cout << "Le pointeur d'arc a ajouter au couplage est nul !" << endl;
+			}
+			throw CException(EXCArretProgramme);
+		}
 	}
 	
 	// Libération de la mémoire
@@ -159,6 +286,16 @@ CCouplage* CGrapheOperations::COPAjouterArcAuCouplage(CCouplage* pCOUCouplage, i
 
 CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCouplage)
 {
+	if (pGRAGraphe == nullptr) {
+		throw CException(EXCPointeurGrapheNul);
+	}
+	if (pCOUCouplage == nullptr) {
+		throw CException(EXCPointeurCouplageNul);
+	}
+	if(pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs() == 0) {
+		return nullptr;
+	}
+
 	// Initialisation des variables
 	int** ppiArcsTMP = new int* [pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs()];
 	int** ppiArcsGraphe = new int* [pGRAGraphe->GRALireNbArcs()];
@@ -187,8 +324,23 @@ CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCo
 
 	// Selection des arcs de ppiArcsGraphe qui ne sont pas dans ppiArcs
 	uicompteur = 0;
+	bool bRetour;
 	for (uiboucle = 0 ; uiboucle < pGRAGraphe->GRALireNbArcs(); uiboucle++) {
-		if (COPEstDansEnsembleArcs(pCOUCouplage, ppiArcsGraphe[uiboucle]) == false) {
+		try {
+			bRetour = COPEstDansEnsembleArcs(pCOUCouplage, ppiArcsGraphe[uiboucle]);
+		}
+		catch (CException EXCException) {
+			cout << "Dans COPComplementaireCouplage : Dans COPEstDansEnsembleArcs :" << endl;
+
+			if (EXCException.EXCLireErreur() == EXCPointeurArcNul) {
+				cout << "Le pointeur de l'arc a comparer est nul !" << endl;
+			}
+			if (EXCException.EXCLireErreur() == EXCPointeurCouplageNul) {
+				cout << "Le pointeur du couplage a comparer est nul !" << endl;
+			}
+			throw CException(EXCArretProgramme);
+		}
+		if (bRetour == false) {
 			ppiArcsTMP[uicompteur][0] = ppiArcsGraphe[uiboucle][0];
 			ppiArcsTMP[uicompteur][1] = ppiArcsGraphe[uiboucle][1];
 			uicompteur++;
@@ -198,7 +350,17 @@ CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCo
 	// Initialisation du retour de couplage
 	CCouplage* pCOUCouplageRetour = new CCouplage();
 	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs(); uiboucle++) {
-		pCOUCouplageRetour->COUAjouterArc(ppiArcsTMP[uiboucle]);
+		try {
+			pCOUCouplageRetour->COUAjouterArc(ppiArcsTMP[uiboucle]);
+		}
+		catch (CException EXCException) {
+			cout << "Dans COPComplementaireCouplage : Dans COUAjouterArc :" << endl;
+
+			if (EXCException.EXCLireErreur() == EXCPointeurAjoutArcNul) {
+				cout << "Le pointeur d'arc a ajouter au couplage est nul !" << endl;
+			}
+			throw CException(EXCArretProgramme);
+		}
 	}
 	
 	// Libération de la mémoire
@@ -217,17 +379,36 @@ CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCo
 
 bool CGrapheOperations::COPEstDansEnsembleArcs(CCouplage* pCOUCouplage, int* piArcATester)
 {
+	if (pCOUCouplage == nullptr) {
+		throw CException(EXCPointeurCouplageNul);
+	}
+	if (piArcATester == nullptr) {
+		throw CException(EXCPointeurArcNul);
+	}
+	if (pCOUCouplage->COULireNbArcs() == 0) {
+		return false;
+	}
 	// Initialisation des variables
 	unsigned int uiTaille = pCOUCouplage->COULireNbArcs();
 	unsigned int uiboucle;
 	
 	// Parcours du tableau
 	for (uiboucle = 0; uiboucle < uiTaille; uiboucle++) {
-		if (pCOUCouplage->COULireValeur(uiboucle, 0) == piArcATester[0] && pCOUCouplage->COULireValeur(uiboucle, 1) == piArcATester[1]) {
-			return true;
+		try {
+			if (pCOUCouplage->COULireValeur(uiboucle, 0) == piArcATester[0] && pCOUCouplage->COULireValeur(uiboucle, 1) == piArcATester[1]) {
+				return true;
+			}
+			else if (pCOUCouplage->COULireValeur(uiboucle, 0) == piArcATester[1] && pCOUCouplage->COULireValeur(uiboucle, 1) == piArcATester[0]) {
+				return true;
+			}
 		}
-		else if (pCOUCouplage->COULireValeur(uiboucle, 0) == piArcATester[1] && pCOUCouplage->COULireValeur(uiboucle, 1) == piArcATester[0]) {
-			return true;
+		catch (CException EXCException) {
+			cout << "Dans COPEstDansEnsembleArcs : Dans COULireValeur :" << endl;
+
+			if (EXCException.EXCLireErreur() == EXCErreurSegmentation) {
+				cout << "SIGSEGV : Accès en lecture interdit !" << endl;
+			}
+			throw CException(EXCArretProgramme);
 		}
 	}
 	return false;

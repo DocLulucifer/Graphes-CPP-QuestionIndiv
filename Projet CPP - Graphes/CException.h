@@ -2,6 +2,7 @@
 #define EXCEPTION
 
 #define EXCNonSpecifiee 0
+#define EXCErreurSegmentation 100
 
 class CException
 {

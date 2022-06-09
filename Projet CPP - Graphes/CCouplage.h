@@ -8,6 +8,10 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include "CException.h"
+
+#define EXCSuppArcCouplageImpossible 70
+#define EXCPointeurAjoutArcNul 71
 
 using namespace std;
 

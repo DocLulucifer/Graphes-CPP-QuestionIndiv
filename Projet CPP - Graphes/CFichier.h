@@ -21,6 +21,7 @@
 #define EXCBaliseIncorrecte 8
 #define EXCMiseEnFormeIncorecte 9
 #define EXCValeurNeg 10
+#define EXCNbLigneIns 11
 
 using namespace std;
 
