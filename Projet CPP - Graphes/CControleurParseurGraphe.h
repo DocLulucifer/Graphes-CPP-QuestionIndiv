@@ -18,23 +18,23 @@ public:
 	**** Entrées :																					   ****
 	**** Nécessite :																		  	       ****
 	**** Sorties :	CControleurParseur																   ****
-	**** Entraîne : La construction d'un objet CControleurParseur par défaut						   ****
+	**** Entraîne : La construction d'un objet CControleurParseurGraphe par défaut					   ****
 	******************************************************************************************************/
 	CControleurParseurGraphe();
 
-	/***********************************************************************************************************************
-	**** Entrées : pcChemin : char*																						****
-	**** Nécessite :																		  							****
-	**** Sorties :	CControleurParseur																					****
-	**** Entraîne : La construction d'un objet CControleurParseur possédant un chemin d'accès à un fichier de lecture	****
-	***********************************************************************************************************************/
+	/***************************************************************************************************************************
+	**** Entrées : pcChemin : char*																							****
+	**** Nécessite :																		  								****
+	**** Sorties :	CControleurParseur																						****
+	**** Entraîne : La construction d'un objet CControleurParseurGraphe possédant un chemin d'accès à un fichier de lecture	****
+	***************************************************************************************************************************/
 	CControleurParseurGraphe(char* pcChemin);
 
 	/******************************************************************************************************
 	**** Entrées :																					   ****
 	**** Nécessite :																		  	       ****
 	**** Sorties :																					   ****
-	**** Entraîne : La destruction de l'objet CControleurParseur									   ****
+	**** Entraîne : La destruction de l'objet CControleurParseurGraphe								   ****
 	******************************************************************************************************/
 	~CControleurParseurGraphe();
 
@@ -57,8 +57,8 @@ public:
 	/******************************************************************************************************
 	**** Entrées :																					   ****
 	**** Nécessite :																		  	       ****
-	**** Sorties :	pcConChemin : char*																   ****
-	**** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
+	**** Sorties :	CGraphe* : Le graphe lu dans le fichier											   ****
+	**** Entraîne :																					   ****
 	******************************************************************************************************/
 	CGraphe* CONLireGraphe();
 
