@@ -247,7 +247,15 @@ void CControleurParseurGraphe::CONLireFichierGraphe()
 	//Affectation Graphe
 		//Sommets
 	for (uiBoucle = 0; uiBoucle < uiNbSommets; uiBoucle++) {
-		pGRACONGraphe->GRAAjouterSommet(piSommets[uiBoucle]);
+		try {
+			pGRACONGraphe->GRAAjouterSommet(piSommets[uiBoucle]);
+		}
+		catch (CException EXCException) {
+			if (EXCException.EXCLireErreur() == EXCNumeroIndisponible) {
+				cout << "Le numéro de sommet " << piSommets[uiBoucle] << " est déjà utilisé." << endl;
+			}
+		}
+		
 	}
 
 		//Arcs
@@ -258,6 +266,9 @@ void CControleurParseurGraphe::CONLireFichierGraphe()
 		catch (CException EXCException) {
 			if (EXCException.EXCLireErreur() == EXCPointeurSommetNul) {
 				cout << "Erreur Interne (GRAAjouterArc) : Le ou les pointeur(s) de sommet passe(s) en parametre est/sont nul(s) !" << endl;
+			}
+			if (EXCException.EXCLireErreur() == EXCPointeurArcNul) {
+				cout << "Erreur Interne (GRAAjouterArc) : Le ou les pointeur(s) d'arc passe(s) en parametre est/sont nul(s) !" << endl;
 			}
 			throw CException(EXCArretProgramme);
 		}

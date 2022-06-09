@@ -14,12 +14,30 @@ CGraphe * CGrapheOperations::COPInversion(const CGraphe* GRAParam) const
 	CGraphe* pGRARetour = new CGraphe();
 	unsigned int uiboucle, uiboucle2;
 	for (uiboucle = 0; uiboucle < GRAParam->GRALireNbSommet(); uiboucle++) {
-		pGRARetour->GRAAjouterSommet(GRAParam->GRALireSommets()[uiboucle]->SOMLireNumero());
+		try {
+			pGRARetour->GRAAjouterSommet(GRAParam->GRALireSommets()[uiboucle]->SOMLireNumero());
+		}
+		catch (CException EXCException) {
+			if (EXCException.EXCLireErreur() == EXCNumeroIndisponible) {
+				cout << "Le numéro de sommet " << GRAParam->GRALireSommets()[uiboucle]->SOMLireNumero() << " est déjà utilisé." << endl;
+			}
+		}
 	}
 
 	for (uiboucle = 0; uiboucle < GRAParam->GRALireNbSommet(); uiboucle++) {
 		for (uiboucle2 = 0; uiboucle2 < GRAParam->GRALireSommets()[uiboucle]->SOMLireNbArcsSortants(); uiboucle2++) {
-			pGRARetour->GRAAjouterArc(GRAParam->GRALireSommets()[uiboucle]->SOMLireArcsSortants()[uiboucle2]->ARCLireDestination(), GRAParam->GRALireSommets()[uiboucle]->SOMLireNumero());
+			try {
+				pGRARetour->GRAAjouterArc(GRAParam->GRALireSommets()[uiboucle]->SOMLireArcsSortants()[uiboucle2]->ARCLireDestination(), GRAParam->GRALireSommets()[uiboucle]->SOMLireNumero());
+			}
+			catch (CException EXCException) {
+				if (EXCException.EXCLireErreur() == EXCPointeurSommetNul) {
+					cout << "Erreur Interne (GRAAjouterArc) : Le ou les pointeur(s) de sommet passe(s) en parametre est/sont nul(s) !" << endl;
+				}
+				if (EXCException.EXCLireErreur() == EXCPointeurArcNul) {
+					cout << "Erreur Interne (GRAAjouterArc) : Le ou les pointeur(s) d'arc passe(s) en parametre est/sont nul(s) !" << endl;
+				}
+				throw CException(EXCArretProgramme);
+			}
 		}
 	}
 	return pGRARetour;

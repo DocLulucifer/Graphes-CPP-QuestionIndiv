@@ -221,20 +221,11 @@ void CGraphe::GRASupprimerArc(int iDepart, int iArrivee)
 ******************************************************************************************************/
 void CGraphe::GRAAjouterSommet(CSommet& SOMSommet)
 {
-	int iNum;
 	unsigned int uiBoucle;
-	char pcEntree[1024];
 
 	//Vérification de l'unicité du numéro de sommet et changement de la valeur si besoin
-	while (!GRANumeroSommetUnique(SOMSommet.SOMLireNumero())) {
-		cout << "Les numeros de sommets utilises sont :" << endl;
-		for (uiBoucle = 0; uiBoucle < GRALireNbSommet(); uiBoucle++) {
-			cout << GRALireSommets()[uiBoucle]->SOMLireNumero() << "  ";
-		}
-		cout << endl;
-		cin >> pcEntree;
-		iNum = atoi(pcEntree);
-		SOMSommet.SOMModifierNumero(iNum);
+	if (!GRANumeroSommetUnique(SOMSommet.SOMLireNumero())) {
+		throw CException(EXCNumeroIndisponible);
 	}
 
 	//Equivalent de realloc pour les sommets en passant par un tableau temporaire pour la copie des valeurs
@@ -267,19 +258,12 @@ void CGraphe::GRAAjouterSommet(CSommet& SOMSommet)
 void CGraphe::GRAAjouterSommet(int iNum)
 {
 	unsigned int uiBoucle;
-	char pcEntree[1024];
 	CSommet* pSOMSommet = new CSommet(iNum);
 	
 	//Verificvation unicité du numéro de sommet et changement si besoin
-	while (!GRANumeroSommetUnique(pSOMSommet->SOMLireNumero())) {
-		cout << "Les numeros de sommets utilises sont :" << endl;
-		for (uiBoucle = 0; uiBoucle < GRALireNbSommet(); uiBoucle++) {
-			cout << GRALireSommets()[uiBoucle]->SOMLireNumero() << "  ";
-		}
-		cout << endl;
-		cin >> pcEntree;
-		iNum = atoi(pcEntree);
-		pSOMSommet->SOMModifierNumero(iNum);
+	if (!GRANumeroSommetUnique(pSOMSommet->SOMLireNumero())) {
+		delete pSOMSommet;
+		throw CException(EXCNumeroIndisponible);
 	}
 
 	//Equivalent de realloc pour la liste des sommets en passant par un tableau temporaire pour la copie des valeurs
