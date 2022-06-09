@@ -154,8 +154,8 @@ int* CFichier::FICLireTabSansVirgule(const unsigned int uiNbLignes, char* pcTag1
 			}
 		}
 		FICLigneSuivante(pcLigne);
-		char* pcToken = strtok(pcLigne, "=");
-		if (FICVerifBalise(pcToken, "numero") == true) {
+		char* pcToken3 = strtok(pcLigne, "=");
+		if (FICVerifBalise(pcToken3, "numero") == true) {
 			throw CException(EXCNbLigneIns);
 		}
 
@@ -251,9 +251,9 @@ int** CFichier::FICLireTabAvecVirgule(const unsigned int uiNbLignes, char* pcTag
 			
 		}
 		FICLigneSuivante(pcLigne);
-		char* pcToken = strtok(pcLigne, ",");
-		char* pcToken2 = strtok(pcToken, "=");
-		if (FICVerifBalise(pcToken2, "debut") == true) {
+		char* pcToken4 = strtok(pcLigne, ",");
+		char* pcToken5 = strtok(pcToken4, "=");
+		if (FICVerifBalise(pcToken5, "debut") == true) {
 			throw CException(EXCNbLigneIns);
 		}
 

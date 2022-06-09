@@ -21,44 +21,46 @@ int main(int argc, char* argv[]) {
 
 	if (argc == 3) {
 
-		//D�claration des variables du main
+		//Declaration des variables du main
 		CControleurParseurGraphe* pCONFichierLu = nullptr;
 		CControleurParseurCouplage* pCONFichierCouplageLu = nullptr;
 		CCouplage* pCOUCouplageLu = nullptr;
 		CGraphe* pGRAGraphe = nullptr;
 		CGrapheOperations COPBoiteAOutils;
 
-		//Lecture du graphe pass� en param�tre
+		//Lecture du graphe passe en param�tre
 		try {
 			pCONFichierLu = new CControleurParseurGraphe(argv[1]);
 			pCONFichierLu->CONLireFichierGraphe();
 		}
 		catch (CException EXCException) {
+			cout << "--- ERREUR PARSAGE GRAPHE ---" << endl;
 			if (EXCException.EXCLireErreur() == EXCArretProgramme) {
 				return 1;
 			}
 			else if (EXCException.EXCLireErreur() == EXCCheminVideCtrlParseur) {
-				cout << "Erreur : Chemin de fichier pass� en param�tre vide ou nul !" << endl;
+				cout << "Erreur : Chemin de fichier passe en parametre vide ou nul !" << endl;
 				return 1;
 			}
 		}
 		
-		//Lecture du couplage pass� en param�tre
+		//Lecture du couplage passe en parametre
 		try {
 			pCONFichierCouplageLu = new CControleurParseurCouplage(argv[2]);
 			pCONFichierCouplageLu->CONLireFichierCouplage();
 		}
 		catch (CException EXCException) {
+			cout << "--- ERREUR PARSAGE COUPLAGE ---" << endl;
 			if (EXCException.EXCLireErreur() == EXCArretProgramme) {
 				return 1;
 			}
 			else if (EXCException.EXCLireErreur() == EXCCheminVideCtrlParseur) {
-				cout << "Erreur : Chemin de fichier pass� en param�tre vide ou nul !" << endl;
+				cout << "Erreur : Chemin de fichier passe en parametre vide ou nul !" << endl;
 				return 1;
 			}
 		}
 		
-		//R�cup�ration du graphe lu et affichage
+		//Recuperation du graphe lu et affichage
 		try {
 			cout << "-----Graphe lu depuis le fichier :-----" << endl << endl;
 			pGRAGraphe = new CGraphe(*pCONFichierLu->CONLireGraphe());
@@ -66,6 +68,7 @@ int main(int argc, char* argv[]) {
 			pGRAGraphe->GRAAffichage();
 		}
 		catch (CException EXCException) {
+			cout << "--- ERREUR LECTURE GRAPHE ---" << endl;
 			if (EXCException.EXCLireErreur() == EXCArretProgramme) {
 			}
 			else if (EXCException.EXCLireErreur() == EXCListeSommetInexistante) {
@@ -74,17 +77,18 @@ int main(int argc, char* argv[]) {
 			return 1;
 		}
 		
-		// Ex�cution du test de couplage
+		// Execution du test de couplage
 		try {
 			pCOUCouplageLu = new CCouplage(*pCONFichierCouplageLu->CONLireCouplage());
 			COPBoiteAOutils.COPTestCouplage(pGRAGraphe, pCOUCouplageLu);
 		}
 		catch (CException EXCException) {
+			cout << "--- ERREUR TEST COUPLAGE ---" << endl;
 			if (EXCException.EXCLireErreur() == EXCArretProgramme) {
 				return 1;
 			}
 		}
-		//Lib�ration de la m�moire allou�e dans le main
+		//Liberation de la memoire allouee dans le main
 		delete pGRAGraphe;
 		delete pCOUCouplageLu;
 		delete pCONFichierLu;

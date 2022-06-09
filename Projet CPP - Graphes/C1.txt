@@ -1,7 +1,8 @@
-NBArcs=4
+NBArcs = 4
 Arcs=[
 	Debut=1, Fin=2
 	Debut= 4, Fin=7
+
 	Debut=3, Fin=6
-	Debut=5, Fin=8
+		Debut=5, Fin=8
 ]

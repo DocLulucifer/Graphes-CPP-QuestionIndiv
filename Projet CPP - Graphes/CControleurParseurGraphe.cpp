@@ -111,7 +111,7 @@ void CControleurParseurGraphe::CONLireFichierGraphe()
 			cout << "Le pointeur passe en parametre de FICMinuscule est nul !" << endl;
 		}
 		if (EXCException.EXCLireErreur() == EXCBoucleInfinie) {
-			cout << "Une boucle infinie a ete declenchee dans FICLigneSuivante !" << endl;
+			cout << "Une boucle infinie a ete declenchee dans FICLigneSuivante ! (Ou balise non detectee)" << endl;
 		}
 		if (EXCException.EXCLireErreur() == EXCLigneNulle) {
 			cout << "Le pointeur passe en parametre de FICLigneSuivante est nul !" << endl;
@@ -147,7 +147,7 @@ void CControleurParseurGraphe::CONLireFichierGraphe()
 			cout << "Le pointeur passe en parametre de FICMinuscule est nul !" << endl;
 		}
 		if (EXCException.EXCLireErreur() == EXCBoucleInfinie) {
-			cout << "Une boucle infinie a ete declenchee dans FICLigneSuivante !" << endl;
+			cout << "Une boucle infinie a ete declenchee dans FICLigneSuivante ! (Ou balise non detectee)" << endl;
 		}
 		if (EXCException.EXCLireErreur() == EXCLigneNulle) {
 			cout << "Le pointeur passe en parametre de FICLigneSuivante est nul !" << endl;
@@ -194,6 +194,12 @@ void CControleurParseurGraphe::CONLireFichierGraphe()
 		if (EXCException.EXCLireErreur() == EXCMiseEnFormeIncorecte) {
 			cout << "Mise en forme incorrecte ou valeur manquante !" << endl;
 		}
+		if (EXCException.EXCLireErreur() == EXCNbLigneIns) {
+			cout << "Nombre de lignes indiquees est inferieur au nombre de valeurs renseignees !" << endl;
+		}
+		if (EXCException.EXCLireErreur() == EXCBaliseIncorrecte) {
+			cout << "Balise incorrecte ou manquante ! (Il manque peut etre des lignes de valeurs)" << endl;
+		}		
 		throw CException(EXCArretProgramme);
 	}
 	
@@ -228,6 +234,12 @@ void CControleurParseurGraphe::CONLireFichierGraphe()
 		}
 		if (EXCException.EXCLireErreur() == EXCMiseEnFormeIncorecte) {
 			cout << "Mise en forme incorrecte ou valeur manquante !" << endl;
+		}
+		if (EXCException.EXCLireErreur() == EXCNbLigneIns) {
+			cout << "Nombre de lignes indiquees est inferieur au nombre de valeurs renseignees !" << endl;
+		}
+		if (EXCException.EXCLireErreur() == EXCBaliseIncorrecte) {
+			cout << "Balise incorrecte ou manquante ! (Il manque peut etre des lignes de valeurs)" << endl;
 		}
 		throw CException(EXCArretProgramme);
 	}
