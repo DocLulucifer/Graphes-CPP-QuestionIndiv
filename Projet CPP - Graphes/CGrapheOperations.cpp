@@ -58,10 +58,10 @@ CGraphe * CGrapheOperations::COPNonOriente(const CGraphe* pGRAParam) const
 }
 
 /******************************************************************************************************
-**** Entrées : pGRAGraphe : CGraphe*, ppARCArcs : CArc**										   ****
-**** Nécessite :																		  	       ****
+**** Entrees : pGRAGraphe : CGraphe*, pCOUCouplage : CCouplage*									   ****
+**** Necessite :																		  	       ****
 **** Sorties : bool																				   ****
-**** Entraîne : Determine si le couplage ppARCArcs est de taille maximale						   ****
+**** Entraine : Determine si le couplage pCOUCouplage est de taille maximale					   ****
 ******************************************************************************************************/
 bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCouplage)
 {
@@ -91,13 +91,18 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 		return false;
 	}
 	else {
+		//Tests pour determiner si le couplage est de taille maximale
+
+		// Initialisation
 		unsigned int uiboucle, uiTailleComplementaire = pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs();
 		int* piArcAAjouter = new int[2];
+
 		cout << "L'ensemble d'arcs passe en parametre est un couplage !" << endl;
 		
 		cout << endl << "--- Affichage du couplage ---" << endl;
 		pCOUCouplage->COUAfficherCouplage();
 		
+		// On determnine un ensemble d'arcs complementaire : L'ensemble des arcs du graphe prive des arcs du couplage
 		CCouplage* pCOUEnsembleComplementaire = nullptr;
 		try {
 			pCOUEnsembleComplementaire = COPComplementaireCouplage(pGRAGraphe, pCOUCouplage);
@@ -115,8 +120,10 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 			throw CException(EXCArretProgramme);
 		}
 		
+		// Execution des tests
 		for (uiboucle = 0; uiboucle < uiTailleComplementaire; uiboucle++) {
 			
+			// On prend un arc de l'ensemble complementaire et on l'ajoute au couplage existant via un nouvel objet : l'ensemble test
 			try {
 				piArcAAjouter[0] = pCOUEnsembleComplementaire->COULireValeur(uiboucle, 0);
 				piArcAAjouter[1] = pCOUEnsembleComplementaire->COULireValeur(uiboucle, 0);
@@ -147,6 +154,7 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 			}
 			unsigned int uiTailleEnsembleTest = pCOUEnsembleTest->COULireNbArcs();
 
+			// Et on determine si le couplage est maximal
 			try {
 				if (COPEstUnCouplage(pCOUEnsembleTest) == true) {
 					cout << "Le couplage n'est pas de taille maximale !" << endl;
@@ -185,7 +193,12 @@ bool CGrapheOperations::COPTestCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCoup
 	return true;
 }
 
-
+/******************************************************************************************************
+* Entrees : pCOUCouplage : CCouplage*															   ****
+* Necessite :																			  	       ****
+* Sorties : bool																				   ****
+* Entraine : Deteremine si pCOUCouplage est bein un couplage									   ****
+******************************************************************************************************/
 bool CGrapheOperations::COPEstUnCouplage(CCouplage* pCOUCouplage)
 {
 	if (pCOUCouplage == nullptr) {
@@ -238,6 +251,12 @@ bool CGrapheOperations::COPEstUnCouplage(CCouplage* pCOUCouplage)
 	return true;
 }
 
+/******************************************************************************************************
+* Entrees : pCOUCouplage : CCouplage*, piArcs : int*											   ****
+* Necessite :																			  	       ****
+* Sorties : bool																				   ****
+* Entraine : Ajouter un arc au couplage pCOUCouplage											   ****
+******************************************************************************************************/
 CCouplage* CGrapheOperations::COPAjouterArcAuCouplage(CCouplage* pCOUCouplage, int* piArcs)
 {
 	if (pCOUCouplage == nullptr) {
@@ -302,6 +321,12 @@ CCouplage* CGrapheOperations::COPAjouterArcAuCouplage(CCouplage* pCOUCouplage, i
 	return pCOURetour;
 }
 
+/******************************************************************************************************
+* Entrees : pGRAGraphe : CGraphe*, pCOUCouplage : CCouplage*									   ****
+* Necessite :																			  	       ****
+* Sorties : CCouplage* : Ensemble d'arcs complementaire											   ****
+* Entraine : Genere l'ensemble des arcs du graphe prives de ceux du couplage					   ****
+******************************************************************************************************/
 CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCouplage* pCOUCouplage)
 {
 	if (pGRAGraphe == nullptr) {
@@ -395,6 +420,12 @@ CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCo
 	return pCOUCouplageRetour;
 }
 
+/******************************************************************************************************
+* Entrees : pCOUCouplage : CCouplage*, piArcATester : int*										   ****
+* Necessite :																			  	       ****
+* Sorties : bool																				   ****
+* Entraine : Dit si l'arc passe en parametre est bien dans l'ensemble pCOUCouplage				   ****
+******************************************************************************************************/
 bool CGrapheOperations::COPEstDansEnsembleArcs(CCouplage* pCOUCouplage, int* piArcATester)
 {
 	if (pCOUCouplage == nullptr) {

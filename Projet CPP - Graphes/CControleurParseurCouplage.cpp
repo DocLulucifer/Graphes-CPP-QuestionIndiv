@@ -2,10 +2,10 @@
 
 
 /******************************************************************************************************
-**** Entr�es :																					   ****
-**** N�cessite :																		  	       ****
+**** Entrées :																					   ****
+**** Nécessite :																		  	       ****
 **** Sorties :	CControleurParseur																   ****
-**** Entra�ne : La construction d'un objet CControleurParseur par d�faut						   ****
+**** Entraîne : La construction d'un objet CControleurParseurCouplage par défaut				   ****
 ******************************************************************************************************/
 CControleurParseurCouplage::CControleurParseurCouplage()
 {
@@ -13,12 +13,12 @@ CControleurParseurCouplage::CControleurParseurCouplage()
 	pCOUCouplage = new CCouplage();
 }
 
-/***********************************************************************************************************************
-**** Entr�es : pcChemin : char*																						****
-**** N�cessite :																		  							****
-**** Sorties :	CControleurParseur																					****
-**** Entra�ne : La construction d'un objet CControleurParseur poss�dant un chemin d'acc�s � un fichier de lecture	****
-***********************************************************************************************************************/
+/*******************************************************************************************************************************
+**** Entrées : pcChemin : char*																								****
+**** Nécessite :																		  									****
+**** Sorties :	CControleurParseur																							****
+**** Entraîne : La construction d'un objet CControleurParseurCouplage possédant un chemin d'accès à un fichier de lecture	****
+*******************************************************************************************************************************/
 CControleurParseurCouplage::CControleurParseurCouplage(char* pcChemin)
 {
 	pcCONChemin = pcChemin;
@@ -26,10 +26,10 @@ CControleurParseurCouplage::CControleurParseurCouplage(char* pcChemin)
 }
 
 /******************************************************************************************************
-**** Entr�es :																					   ****
-**** N�cessite :																		  	       ****
+**** Entrées :																					   ****
+**** Nécessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entra�ne : La destruction de l'objet CControleurParseur									   ****
+**** Entraîne : La destruction de l'objet CControleurParseurCouplage							   ****
 ******************************************************************************************************/
 CControleurParseurCouplage::~CControleurParseurCouplage()
 {
@@ -39,10 +39,10 @@ CControleurParseurCouplage::~CControleurParseurCouplage()
 }
 
 /******************************************************************************************************
-**** Entr�es :																					   ****
-**** N�cessite :																		  	       ****
+**** Entrées :																					   ****
+**** Nécessite :																		  	       ****
 **** Sorties :	pcConChemin : char*																   ****
-**** Entra�ne : Renvoie le chemin d'acc�s au fichier de lecture									   ****
+**** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
 ******************************************************************************************************/
 char* CControleurParseurCouplage::CONLireChemin()
 {
@@ -50,26 +50,32 @@ char* CControleurParseurCouplage::CONLireChemin()
 }
 
 /******************************************************************************************************
-**** Entr�es : pcChemin : char*																	   ****
-**** N�cessite :																		  	       ****
+**** Entrées : pcChemin : char*																	   ****
+**** Nécessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entra�ne : Modifie le chemin d'acc�s au fichier de lecture									   ****
+**** Entraîne : Modifie le chemin d'accès au fichier de lecture									   ****
 ******************************************************************************************************/
 void CControleurParseurCouplage::CONModifierChemin(char* pcChemin)
 {
 	pcCONChemin = pcChemin;
 }
 
+/******************************************************************************************************
+**** Entrées :																					   ****
+**** Nécessite :																		  	       ****
+**** Sorties :	unsigned int : Le nombre d'arcs dans le couplage								   ****
+**** Entraîne :																					   ****
+******************************************************************************************************/
 unsigned int CControleurParseurCouplage::CONLireNombreCouplage()
 {
 	return pCOUCouplage->COULireNbArcs();
 }
 
 /******************************************************************************************************
-**** Entr�es :																					   ****
-**** N�cessite :																		  	       ****
-**** Sorties :	pcConChemin : char*																   ****
-**** Entra�ne : Renvoie le chemin d'acc�s au fichier de lecture									   ****
+**** Entrées :																					   ****
+**** Nécessite :																		  	       ****
+**** Sorties :	CCouplage* : Le CCouplage lu dans le fichier									   ****
+**** Entraîne :																					   ****
 ******************************************************************************************************/
 CCouplage* CControleurParseurCouplage::CONLireCouplage()
 {
@@ -77,10 +83,10 @@ CCouplage* CControleurParseurCouplage::CONLireCouplage()
 }
 
 /******************************************************************************************************
-**** Entr�es :																					   ****
-**** N�cessite :																		  	       ****
+**** Entrées :																					   ****
+**** Nécessite :																		  	       ****
 **** Sorties :																					   ****
-**** Entra�ne : Lis le fichier de lecture														   ****
+**** Entraîne : Lis le fichier de lecture														   ****
 ******************************************************************************************************/
 void CControleurParseurCouplage::CONLireFichierCouplage()
 {

@@ -18,23 +18,23 @@ public:
 	**** Entrées :																					   ****
 	**** Nécessite :																		  	       ****
 	**** Sorties :	CControleurParseur																   ****
-	**** Entraîne : La construction d'un objet CControleurParseur par défaut						   ****
+	**** Entraîne : La construction d'un objet CControleurParseurCouplage par défaut				   ****
 	******************************************************************************************************/
 	CControleurParseurCouplage();
 
-	/***********************************************************************************************************************
-	**** Entrées : pcChemin : char*																						****
-	**** Nécessite :																		  							****
-	**** Sorties :	CControleurParseur																					****
-	**** Entraîne : La construction d'un objet CControleurParseur possédant un chemin d'accès à un fichier de lecture	****
-	***********************************************************************************************************************/
+	/*******************************************************************************************************************************
+	**** Entrées : pcChemin : char*																								****
+	**** Nécessite :																		  									****
+	**** Sorties :	CControleurParseur																							****
+	**** Entraîne : La construction d'un objet CControleurParseurCouplage possédant un chemin d'accès à un fichier de lecture	****
+	*******************************************************************************************************************************/
 	CControleurParseurCouplage(char* pcChemin);
 
 	/******************************************************************************************************
 	**** Entrées :																					   ****
 	**** Nécessite :																		  	       ****
 	**** Sorties :																					   ****
-	**** Entraîne : La destruction de l'objet CControleurParseur									   ****
+	**** Entraîne : La destruction de l'objet CControleurParseurCouplage							   ****
 	******************************************************************************************************/
 	~CControleurParseurCouplage();
 
@@ -54,13 +54,19 @@ public:
 	******************************************************************************************************/
 	void CONModifierChemin(char* pcChemin);
 	
+	/******************************************************************************************************
+	**** Entrées :																					   ****
+	**** Nécessite :																		  	       ****
+	**** Sorties :	unsigned int : Le nombre d'arcs dans le couplage								   ****
+	**** Entraîne :																					   ****
+	******************************************************************************************************/
 	unsigned int CONLireNombreCouplage();
 
 	/******************************************************************************************************
 	**** Entrées :																					   ****
 	**** Nécessite :																		  	       ****
-	**** Sorties :	pcConChemin : char*																   ****
-	**** Entraîne : Renvoie le chemin d'accès au fichier de lecture									   ****
+	**** Sorties :	CCouplage* : Le CCouplage lu dans le fichier									   ****
+	**** Entraîne :																					   ****
 	******************************************************************************************************/
 	CCouplage* CONLireCouplage();
 

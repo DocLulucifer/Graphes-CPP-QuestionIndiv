@@ -1,11 +1,23 @@
 #include "CCouplage.h"
 
+/******************************************************************************************************
+* Entrees : 																					   ****
+* Necessite :																			  	       ****
+* Sorties : 																					   ****
+* Entraine : Genere un objet CCouplage par defaut												   ****
+******************************************************************************************************/
 CCouplage::CCouplage()
 {
 	ppiArcs = nullptr;
 	uiNbArcs = 0;
 }
 
+/******************************************************************************************************
+* Entrees : COUCouplage : CCouplage&															   ****
+* Necessite : Un objet CCouplage a recopier												  	       ****
+* Sorties : 																					   ****
+* Entraine : Genere un objet CCouplage par recopie												   ****
+******************************************************************************************************/
 CCouplage::CCouplage(CCouplage& COUCouplage)
 {
 	unsigned int uiboucle;
@@ -22,6 +34,12 @@ CCouplage::CCouplage(CCouplage& COUCouplage)
 	uiNbArcs = COUCouplage.COULireNbArcs();
 }
 
+/******************************************************************************************************
+* Entrees : 																					   ****
+* Necessite :																			  	       ****
+* Sorties : 																					   ****
+* Entraine : Destruction d'un objet CCouplage													   ****
+******************************************************************************************************/
 CCouplage::~CCouplage()
 {
 	unsigned int uiboucle;
@@ -32,6 +50,12 @@ CCouplage::~CCouplage()
 	uiNbArcs = 0;
 }
 
+/******************************************************************************************************
+* Entrees : uiIndice1 : unsigned int, uiIndice2 : unsigned int									   ****
+* Necessite :																			  	       ****
+* Sorties : int	: une valeur du tableau d'arcs													   ****
+* Entraine : 																					   ****
+******************************************************************************************************/
 int CCouplage::COULireValeur(unsigned int uiIndice1, unsigned int uiIndice2)
 {
 	if (!(uiIndice1 < uiNbArcs && uiIndice2 < 2)) {
@@ -40,6 +64,12 @@ int CCouplage::COULireValeur(unsigned int uiIndice1, unsigned int uiIndice2)
 	return ppiArcs[uiIndice1][uiIndice2];
 }
 
+/******************************************************************************************************
+* Entrees :																						   ****
+* Necessite :																			  	       ****
+* Sorties : int	: Le nombre d'arcs contenus														   ****
+* Entraine : 																					   ****
+******************************************************************************************************/
 void CCouplage::COUEcritureValeur(unsigned int uiIndice1, unsigned int uiIndice2, int iValeur)
 {
 	if (!(uiIndice1 < uiNbArcs && uiIndice2 < 2)) {
@@ -48,11 +78,23 @@ void CCouplage::COUEcritureValeur(unsigned int uiIndice1, unsigned int uiIndice2
 	ppiArcs[uiIndice1][uiIndice2] = iValeur;
 }
 
+/******************************************************************************************************
+* Entrees : uiIndice1 : unsigned int, uiIndice2 : unsigned int, iVAleur : int					   ****
+* Necessite :																			  	       ****
+* Sorties :																						   ****
+* Entraine : La modification d'une valeur du tableau d'arcs										   ****
+******************************************************************************************************/
 unsigned int CCouplage::COULireNbArcs()
 {
 	return uiNbArcs;
 }
 
+/******************************************************************************************************
+* Entrees : piArcs : int*																		   ****
+* Necessite :																			  	       ****
+* Sorties :																						   ****
+* Entraine : L'ajout d'un arc au tableau d'arcs													   ****
+******************************************************************************************************/
 void CCouplage::COUAjouterArc(int* piArc)
 {
 	if (piArc == nullptr) {
@@ -80,6 +122,12 @@ void CCouplage::COUAjouterArc(int* piArc)
 	ppiArcs = ppiNouveau;
 }
 
+/******************************************************************************************************
+* Entrees : uiIndice : unsigned int																   ****
+* Necessite :																			  	       ****
+* Sorties :																						   ****
+* Entraine : La suppression d'un arc du tableau d'arcs											   ****
+******************************************************************************************************/
 void CCouplage::COUSupprimerArc(unsigned int uiIndice)
 {
 	if (!(uiIndice < uiNbArcs)) {
@@ -107,6 +155,12 @@ void CCouplage::COUSupprimerArc(unsigned int uiIndice)
 	ppiArcs = ppiNouveau;
 }
 
+/******************************************************************************************************
+* Entrees : 																					   ****
+* Necessite :																			  	       ****
+* Sorties :																						   ****
+* Entraine : L'affichage dans la console du tableau d'arc										   ****
+******************************************************************************************************/
 CCouplage& CCouplage::operator=(CCouplage& COUCouplage)
 {
 	unsigned int uiboucle;
@@ -131,7 +185,12 @@ CCouplage& CCouplage::operator=(CCouplage& COUCouplage)
 	return *this;
 }
 
-
+/******************************************************************************************************
+* Entrees : COUCouplage : CCouplage&															   ****
+* Necessite :																			  	       ****
+* Sorties :	this : CCouplage&																	   ****
+* Entraine : L'affectation à l'objet des valeurs de l'objet passé en parametre					   ****
+******************************************************************************************************/
 void CCouplage::COUAfficherCouplage()
 {
 	unsigned int uiboucle;
