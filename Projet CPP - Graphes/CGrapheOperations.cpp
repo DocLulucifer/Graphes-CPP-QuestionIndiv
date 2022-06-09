@@ -209,6 +209,7 @@ CCouplage* CGrapheOperations::COPComplementaireCouplage(CGraphe* pGRAGraphe, CCo
 	for (uiboucle = 0; uiboucle < pGRAGraphe->GRALireNbArcs() - pCOUCouplage->COULireNbArcs(); uiboucle++) {
 		delete[] ppiArcsTMP[uiboucle];
 	}
+	delete[] ppiArcsTMP;
 	// Retour du complémentaire
 	
 	return pCOUCouplageRetour;
